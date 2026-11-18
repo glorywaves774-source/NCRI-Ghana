@@ -1359,3 +1359,109 @@ html.flow .drawable.seen circle.s:nth-of-type(2){animation-delay:.12s}html.flow 
 /* value chips line up with the page content */
 .vchips{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));box-sizing:border-box}
 @media (max-width:760px){.vchips{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}}
+
+/* =====================================================================
+   APPLE UI (Human Interface Guidelines, on solid surfaces)
+   Clarity, deference to content and depth through layering and motion.
+   System font for interface text (San Francisco on Apple devices),
+   44px tap targets, segmented controls, inset grouped lists, sheets,
+   tinted buttons, switches and Apple's spring timing.
+   ===================================================================== */
+:root{--font-b:-apple-system,BlinkMacSystemFont,'SF Pro Text','Figtree','Segoe UI',system-ui,sans-serif;
+  --spring:cubic-bezier(.32,.72,0,1);--ease:cubic-bezier(.32,.72,0,1);
+  --fill:color-mix(in srgb,var(--fg) 7%,transparent);--fill-2:color-mix(in srgb,var(--fg) 11%,transparent);
+  --sep:color-mix(in srgb,var(--fg) 12%,transparent);--tint:var(--green)}
+:root[data-theme="dark"]{--tint:#8FE3B6}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--tint:#8FE3B6}}
+body,button,input,select,textarea{font-family:var(--font-b)}
+body{-webkit-font-smoothing:antialiased;letter-spacing:-.003em}
+h1,.phero h1{letter-spacing:-.022em}
+
+/* 44px minimum tap targets */
+.btn,.links>a,.links .dd>button,.chip,.vchip,.tab,.tabs button,.dr-list a,.amt,.focus-card,.acc summary{min-height:44px}
+.nav .icon-btn{min-width:44px;min-height:44px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;letter-spacing:-.01em}
+.btn:active,.chip:active,.tab:active,.vchip:active,.pillar:active,.story:active,.way:active,.focus-card:active{transform:scale(.97)!important;transition:transform .12s var(--spring)}
+
+/* buttons: filled for the main action, tinted for the rest (Apple's tinted style) */
+.btn.line,.btn:not(.primary):not(.green):not(.ghost):not(.sm){background:color-mix(in srgb,var(--tint) 13%,transparent)!important;border:0!important;color:var(--tint)!important}
+.btn.line:hover,.btn:not(.primary):not(.green):not(.ghost):not(.sm):hover{background:color-mix(in srgb,var(--tint) 20%,transparent)!important}
+
+/* segmented controls: people groups, filters */
+.tabs,.tabs.glass,.chips{display:inline-flex!important;flex-wrap:wrap;gap:2px!important;padding:3px!important;border-radius:12px!important;background:var(--fill)!important;border:0!important;box-shadow:none!important;width:auto}
+.tabs button,.tab,.chip{border:0!important;background:transparent!important;color:var(--fg)!important;border-radius:9px!important;padding:6px 16px!important;font:600 .9rem var(--font-b)!important;box-shadow:none!important;transform:none!important;min-height:36px}
+.tab[aria-selected="true"],.tabs button[aria-selected="true"],.chip[aria-pressed="true"],.chip.on,.chip[aria-selected="true"]{background:var(--surface)!important;color:var(--fg)!important;box-shadow:0 1px 2px rgba(0,0,0,.08),0 3px 8px -2px rgba(0,0,0,.14)!important}
+:root[data-theme="dark"] :is(.tab[aria-selected="true"],.tabs button[aria-selected="true"],.chip[aria-pressed="true"],.chip.on){background:#2A4437!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.tab[aria-selected="true"],.tabs button[aria-selected="true"],.chip[aria-pressed="true"],.chip.on){background:#2A4437!important}}
+.tabs button,.tab,.chip{transition:background-color .25s var(--spring),box-shadow .25s var(--spring)}
+
+/* inset grouped lists: questions, menu drawer */
+.acc{display:block;border-radius:14px;overflow:hidden;background:var(--surface);border:1px solid var(--rule);box-shadow:0 1px 2px rgba(8,48,28,.05)}
+.acc details{border-radius:0!important;border:0!important;box-shadow:none!important;background:transparent!important;margin:0!important}
+.acc details+details{border-top:1px solid var(--sep)!important}
+.acc summary{padding:14px 18px!important;font:500 1rem var(--font-b)!important}
+.acc summary::after{content:""!important;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .3s var(--spring)!important;margin-right:4px}
+.acc details[open] summary::after{transform:rotate(45deg)!important}
+.acc .ans{padding:0 18px 16px!important}
+html.flow .acc.stagger>*{transform:none}
+.dr-list{gap:16px}
+.dr-g{background:color-mix(in srgb,var(--fg) 4%,var(--surface));border-radius:12px;overflow:hidden;gap:0}
+.dr-h{background:var(--surface);padding:0 4px 6px!important;margin:0!important}
+.dr-g:has(.dr-h){background:transparent}
+.dr-g:has(.dr-h) a{background:color-mix(in srgb,var(--fg) 4%,var(--surface))}
+.dr-g:has(.dr-h) .dr-h+a{border-radius:12px 12px 0 0}
+.dr-g a:last-child{border-radius:0 0 12px 12px}
+.dr-g:not(:has(.dr-h)) a,.dr-g a:only-of-type{border-radius:12px}
+.dr-list a{border-radius:0;display:flex!important;align-items:center;justify-content:space-between;padding:12px 14px!important}
+.dr-list a+a{box-shadow:inset 0 1px 0 var(--sep)}
+.dr-list a::after{content:"";width:7px;height:7px;border-right:2px solid color-mix(in srgb,var(--fg) 35%,transparent);border-top:2px solid color-mix(in srgb,var(--fg) 35%,transparent);transform:rotate(45deg);flex:none}
+.dr-list a[aria-current="page"]{background:color-mix(in srgb,var(--tint) 16%,var(--surface))!important;color:var(--tint)!important}
+.drawer{transition:transform .45s var(--spring)!important}
+
+/* form fields and switches */
+.fld input,.fld textarea,.fld select{border-radius:12px!important;border:1px solid transparent!important;background:var(--fill)!important;min-height:46px}
+.fld input:focus,.fld textarea:focus,.fld select:focus{background:var(--surface)!important;border-color:var(--tint)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--tint) 22%,transparent)!important}
+main input[type=checkbox]{-webkit-appearance:none;appearance:none;width:51px;height:31px;border-radius:999px;background:var(--fill-2);position:relative;cursor:pointer;flex:none;transition:background-color .25s var(--spring);vertical-align:middle;margin:0 8px 0 0}
+main input[type=checkbox]::after{content:"";position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.25);transition:transform .3s var(--spring)}
+main input[type=checkbox]:checked{background:#34A853}
+main input[type=checkbox]:checked::after{transform:translateX(20px)}
+main input[type=checkbox]:focus-visible{outline:3px solid color-mix(in srgb,var(--tint) 50%,transparent);outline-offset:2px}
+
+/* tab bar: icon and label tinted, no pill (as on iOS) */
+@media (max-width:760px){
+  .tabbar [aria-current="page"]{background:none!important;color:var(--tint)!important}
+  .tabbar a,.tabbar button{font-size:.66rem;font-weight:500;gap:2px}
+  .tabbar svg{width:24px;height:24px}
+}
+
+/* sheets on phones: Laari and pop-ups rise from the bottom with a grab handle */
+@media (max-width:760px){
+  .laari.open .l-panel{position:fixed;left:0!important;right:0!important;bottom:0!important;width:100%!important;height:62vh!important;height:62dvh!important;
+    border-radius:16px 16px 0 0!important;padding-bottom:env(safe-area-inset-bottom,0px);animation:sheetUp .5s var(--spring)!important;z-index:150}
+  .laari.open .l-panel::before{content:"";position:absolute;top:6px;left:50%;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:rgba(255,255,255,.55);z-index:3}
+  .laari.typing .l-panel{left:0!important;right:0!important;border-radius:16px 16px 0 0!important}
+  .modal{align-items:end!important;padding:0!important}
+  .modal .box,.focus-modal-panel{width:100%!important;max-width:none!important;border-radius:16px 16px 0 0!important;animation:sheetUp .5s var(--spring)!important;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px))!important;position:relative}
+  .modal .box::before,.focus-modal-panel::before{content:"";position:absolute;top:6px;left:50%;width:36px;height:5px;margin-left:-18px;border-radius:3px;background:var(--fill-2)}
+  .focus-modal{align-items:end!important;padding:0!important}
+}
+@keyframes sheetUp{from{transform:translateY(100%)}}
+.laari.open .l-panel{animation-timing-function:var(--spring)}
+
+/* large title on phones, as in iOS apps */
+@media (max-width:760px){.phero h1{font-size:2.15rem;line-height:1.08}}
+@media (prefers-reduced-motion:reduce){.laari.open .l-panel,.modal .box,.focus-modal-panel{animation:none!important}}
+/* Apple UI fixes: menu groups keep their full height (the list scrolls), Laari's sheet sits above the tab bar with a dimmed page,
+   and segmented controls win over older card styles */
+.dr-g{overflow:visible!important}
+.dr-list{grid-auto-rows:max-content;grid-template-rows:none!important}
+@media (max-width:760px){
+  .laari.open{z-index:160!important}
+  .laari.open::before{content:"";position:fixed;inset:0;background:rgba(0,0,0,.28);animation:fadeIn .3s ease both}
+  .l-panel{position:relative}
+}
+@keyframes fadeIn{from{opacity:0}}
+main :is(.tabs,.chips).glass:not(.band .glass):not(.l-launch),main .tabs,main .chips{background:var(--fill)!important;border:0!important;box-shadow:none!important;border-radius:12px!important}
+.dr-g{gap:0!important}.dr-g a{margin:0!important}
+.dr-g:has(.dr-h) a:not(:last-child){border-radius:0}
+.dr-g:has(.dr-h) .dr-h+a:last-child{border-radius:12px}

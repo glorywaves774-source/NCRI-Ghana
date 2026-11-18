@@ -1,5 +1,15 @@
 # Changelog
 
+## 18 November 2026 (late): Apple UI
+- Interface text uses Apple's system font (San Francisco on iPhone, iPad and Mac; Figtree elsewhere); serif headings stay.
+- Every button, link and control is at least 44 pixels tall, as Apple recommends for fingers.
+- Segmented controls (iOS style) for the team groups, news and resource filters.
+- Inset grouped lists with chevrons for the menu and the common questions.
+- On phones, Laari and pop-ups rise from the bottom as sheets with a grab handle over a dimmed page.
+- Secondary buttons use Apple's tinted style; the "keep my gift anonymous" box is an iOS switch; fields are soft grey and light up when you type.
+- The tab bar marks the current page with colour only, as on iOS. Motion uses Apple's spring timing.
+- Admin panel: same font, tinted buttons, switches and fields.
+
 ## 18 November 2026 (night): motion
 - The photo magnifier bubble is removed from the whole site (it was still on the home page hero).
 - Groups of cards, value chips and partner logos flow in one after another as they scroll into view; section headings rise gently into place.
