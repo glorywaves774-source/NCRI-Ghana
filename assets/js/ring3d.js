@@ -11,7 +11,7 @@
           (p.caption && !clone ? '<figcaption>' + esc(p.caption) + '</figcaption>' : (clone && p.caption ? '<figcaption>' + esc(p.caption) + '</figcaption>' : '')) + '</figure>';
       }).join('') + '</div>';
     }
-    var moving = !NCRI.reduce && photos.length > 2;
+    var moving = !NCRI.reduce && !NCRI.calm && photos.length > 2;
     host.innerHTML = '<div class="gal marq' + (moving ? ' run' : '') + '" role="group" aria-label="Photo gallery, slowly scrolling"><div class="gal-view" tabindex="0"><div class="gal-run" style="--t:' + (photos.length * 11) + 's">' + half(false) + (moving ? half(true) : '') + '</div></div>' +
       (moving ? '<div class="r-ctrl"><button class="icon-btn" id="gpause" type="button" aria-pressed="false" aria-label="Pause the scrolling photos">' + NCRI.icon('pause') + '</button></div>' : '') + '</div>';
     var root = host.querySelector('.gal'), view = host.querySelector('.gal-view'), pb = host.querySelector('#gpause');

@@ -8,6 +8,8 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var coarse = matchMedia('(pointer: coarse)').matches;
   NCRI.reduce = reduce;
+  NCRI.calm = true;   /* editorial design: no tilt, parallax, magnifier, magnetic buttons or moving strips */
+  var VER = (/[?&]v=([\w-]+)/.exec((document.currentScript || {}).src || '') || [])[1] || '';
 
   /* ---------- helpers ---------- */
   NCRI.esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -40,7 +42,7 @@
     cloud: '<path d="M7 14a4 4 0 1 1 1-7.9A5 5 0 0 1 18 8a3.5 3.5 0 0 1 0 7H7z"/><path d="M9 18l-1 3M13 18l-1 3M17 18l-1 3"/>',
     shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>', crown: '<path d="M4 18h16"/><path d="M5 18L4 8l5 4 3-6 3 6 5-4-1 10"/>',
     circles: '<circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/>', scales: '<path d="M12 4v16M6 20h12M5 8h14"/><path d="M5 8l-3 6a3 3 0 0 0 6 0zM19 8l-3 6a3 3 0 0 0 6 0z"/>',
-    home: '<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>', sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+    home: '<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>', 'shield-check': '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>', 'heart-handshake': '<path d="M12 20s-7-4.3-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.7-7 10-7 10z"/><path d="M8.5 12.5l2-2 2 1.5 2.5-2.5"/>', 'lock-keyhole': '<rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.4"/><path d="M12 16.4V18"/>', droplet: '<path d="M12 3c3.5 4.2 6 7.6 6 10.8A6 6 0 0 1 6 13.8C6 10.6 8.5 7.2 12 3z"/><path d="M9.5 14.5a2.6 2.6 0 0 0 2.5 2.4"/>', sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
     leaf: '<path d="M5 19C5 10 11 5 20 5c0 9-5 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/>', link: '<path d="M9 14a4 4 0 1 1 0-8h3M15 10a4 4 0 1 1 0 8h-3M9 12h6"/>',
     heart: '<path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/>', star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>', pin: '<path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
@@ -236,6 +238,7 @@
       var inner = (p.logo ? '<img src="' + esc(NCRI.U(p.logo)) + '" alt="" loading="lazy">' : '') + '<span>' + esc(p.name) + '</span>';
       return p.url ? '<a class="pitem" href="' + esc(p.url) + '" target="_blank" rel="noopener"' + (i >= list.length ? ' tabindex="-1" aria-hidden="true"' : '') + '>' + inner + '</a>' : '<span class="pitem">' + inner + '</span>';
     }).join('');
+    if (NCRI.calm) return '<section class="pstrip" aria-labelledby="pst"><div class="wrap"><h2 id="pst">Organisations partnering with us</h2><div class="pgrid">' + items + '</div></div></section>';
     var twice = list.length < 6 ? items + items + items + items : items + items;
     return '<section class="pstrip" aria-labelledby="pst"><div class="wrap"><h2 id="pst">Organisations partnering with us</h2></div><div class="marq"><div class="mt" style="--sp:' + Math.max(30, list.length * 7) + 's">' + twice + '</div></div></section>';
   }
@@ -319,6 +322,7 @@
 
   var hot = null;
   function pointerFx() {
+    if (NCRI.calm) return;
     if (coarse || reduce) {
       document.addEventListener('pointermove', glow, { passive: true });
       return;
@@ -429,7 +433,7 @@
   var resolveReady; NCRI.ready = new Promise(function (r) { resolveReady = r; });
   function start() {
     injectFilters(); renderHeader(); pageHero(); progressBar(); pointerFx();
-    ['translate', 'motion', 'lens'].forEach(function (n) { var sc = document.createElement('script'); sc.src = 'assets/js/' + n + '.js'; document.head.appendChild(sc); });
+    (NCRI.calm ? ['translate'] : ['translate', 'motion', 'lens']).forEach(function (n) { var sc = document.createElement('script'); sc.src = 'assets/js/' + n + '.js' + (VER ? '?v=' + VER : ''); document.head.appendChild(sc); });
     NCRI.get('bootstrap').then(function (b) {
       NCRI.settings = b.settings || {}; NCRI.partners = b.partners || []; NCRI.boot = b;
     }).catch(function () { /* the pages still render with their built-in text */ }).then(function () {

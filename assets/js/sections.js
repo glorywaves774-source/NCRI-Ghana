@@ -13,7 +13,8 @@
       function chip(v, k, hide) { return '<a class="vchip" href="' + (opts.cards ? '#v-' + k : 'about.html#v-' + k) + '" style="--c:' + esc(v.color) + ';--on:' + esc(v.on_color) + '"' + (hide ? ' tabindex="-1" aria-hidden="true"' : '') + '><span class="orb">' + ic(v.icon) + '</span>' + esc(v.name) + '</a>'; }
       function row(order, hideAll) { var h = ''; for (var pass = 0; pass < 2; pass++) order.forEach(function (k) { h += chip(list[k], k, hideAll || pass === 1); }); return h; }
       var o1 = list.map(function (_, k) { return k; }), o2 = o1.slice(4).concat(o1.slice(0, 4)).reverse();
-      var html = '<div class="marq" role="group" aria-label="Our core values"><div class="mt" style="--sp:46s">' + row(o1, false) + '</div></div><div class="marq rev" aria-hidden="true"><div class="mt" style="--sp:58s">' + row(o2, true) + '</div></div>';
+      var html = NCRI.calm ? '<div class="vchips" role="group" aria-label="Our core values">' + o1.map(function (k) { return chip(list[k], k, false); }).join('') + '</div>'
+        : '<div class="marq" role="group" aria-label="Our core values"><div class="mt" style="--sp:46s">' + row(o1, false) + '</div></div><div class="marq rev" aria-hidden="true"><div class="mt" style="--sp:58s">' + row(o2, true) + '</div></div>';
       if (opts.cards) {
         html += '<div class="wrap above"><div class="grid g3" style="margin-top:clamp(24px,4vw,44px)">' + list.map(function (v, k) {
           return '<div class="rv" style="--dl:' + ((k % 3) * .08) + 's"><article class="glass vcard tilt" id="v-' + k + '" style="--c:' + esc(v.color) + '"><div class="vhead"><span class="orb" style="--on:' + esc(v.on_color) + '">' + ic(v.icon) + '</span><h3>' + esc(v.name) + '</h3></div><p class="depth">' + esc(v.description) + '</p><div class="commit"><b>Our commitment</b>' + esc(v.commitment) + '</div></article></div>';

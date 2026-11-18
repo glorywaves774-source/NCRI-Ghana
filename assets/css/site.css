@@ -1170,3 +1170,123 @@ footer.site input{background:#0C3D29!important;border-color:rgba(255,255,255,.22
 /* dark mode: clean shadows instead of coloured glows around plain cards, so edges stay crisp */
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.chan,.way,.dtab:not([aria-selected="true"]),.glass:not(.vcard):not(.pillar):not(.stat):not(.band .glass):not(.l-launch)){box-shadow:var(--soft)!important}}
 :root[data-theme="dark"] :is(.chan,.way,.dtab:not([aria-selected="true"]),.glass:not(.vcard):not(.pillar):not(.stat):not(.band .glass):not(.l-launch)){box-shadow:var(--soft)!important}
+
+/* =====================================================================
+   EDITORIAL DESIGN (final layer)
+   Calm, photo-led and fast. Plain light sections, generous spacing,
+   green for navigation and links, orange only for Donate and key actions.
+   Aurora light stays only in the hero, the green band and the
+   "Be Part of the Change" banner. A woven strip, inspired by Northern
+   Ghanaian cloth, marks the hero and the footer.
+   ===================================================================== */
+:root{--r:16px;--slab:var(--surface);--wash:#F3F7F1;--rule:rgba(14,42,29,.10);
+  --weave:repeating-linear-gradient(90deg,#0B5A3C 0 22px,#F29A1A 22px 30px,#0E2A1D 30px 36px,#F7C56B 36px 46px,#4FA33A 46px 58px,#0E2A1D 58px 64px,#C8452C 64px 70px,#0E2A1D 70px 76px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--wash:#0E2018;--rule:rgba(232,243,235,.10)}}
+:root[data-theme="dark"]{--wash:#0E2018;--rule:rgba(232,243,235,.10)}
+@media (prefers-color-scheme:light){body:has(#hero){--bg:#FAFBF8;background:var(--bg)!important}}
+body{font-size:1.0625rem;line-height:1.7}
+.lead{font-size:1.16rem;line-height:1.7;max-width:62ch}
+
+/* page aurora, section tints, blobs, floating balls: off */
+body::after{display:none!important}
+main>section:not(.hero-sec):not(.band)::before{display:none!important}
+main>section:not(.band) .field,.phero .field,.orbs,.orb3{display:none!important}
+
+/* sections: full width, no rainbow borders or glows, alternating plain and soft-green wash */
+main>section:not(.hero-sec){width:100%!important;margin:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;
+  background:var(--bg)!important;padding-block:clamp(64px,8vw,112px)}
+main>section:not(.hero-sec):not(.band):nth-of-type(even){background:var(--wash)!important}
+main>section.phero{padding-block:clamp(40px,6vw,72px)}
+main>section:not(.hero-sec).band{background:linear-gradient(135deg,var(--deep1),var(--deep2))!important}
+body:has(#hero) main>section:not(.hero-sec):not(.band){background:var(--bg)!important}
+body:has(#hero) main>section:not(.hero-sec):not(.band):nth-of-type(even){background:var(--wash)!important}
+body:has(#hero) main>section:not(.hero-sec).band{background:linear-gradient(135deg,#0E6B48,#094C33)!important}
+.hero-sec{padding-block:18px 0}
+
+/* hero: rounded photo panel with a woven strip along its foot */
+.hero{border-radius:20px!important;box-shadow:0 30px 60px -32px rgba(8,48,28,.45)!important}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:var(--weave);z-index:6;pointer-events:none}
+
+/* cards: plain surfaces, thin border, soft shadow; no tilt, glow or offset slab */
+.glass:not(.band .glass):not(.l-launch),.pillar,.stat,.way,.vid,.dtab,.chan,.tile,.vcard,.person,.story,.pcard,.doc,.pol,.chartbox{
+  background:var(--surface)!important;border:1px solid var(--rule)!important;border-radius:var(--r)!important;
+  box-shadow:0 1px 2px rgba(8,48,28,.05),0 12px 30px -20px rgba(8,48,28,.25)!important}
+:root[data-theme="dark"] :is(.glass:not(.band .glass):not(.l-launch),.pillar,.stat,.way,.vid,.dtab,.chan,.tile,.vcard,.person,.story,.pcard,.doc,.pol,.chartbox){box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 16px 36px -22px rgba(0,0,0,.8)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.glass:not(.band .glass):not(.l-launch),.pillar,.stat,.way,.vid,.dtab,.chan,.tile,.vcard,.person,.story,.pcard,.doc,.pol,.chartbox){box-shadow:0 1px 0 rgba(255,255,255,.04) inset,0 16px 36px -22px rgba(0,0,0,.8)!important}}
+:is(.glass,.pillar,.stat,.way,.vid,.dtab,.chan,.vcard,.person,.story,.pcard,.doc){border-top-width:1px!important}
+.tilt,.tilt.hot,.pillar.tilt,.story.tilt,.person.tilt{transform:none!important}
+.pillar,.story,.way,.pcard,.doc,.vid{transition:transform .25s ease,box-shadow .25s ease}
+@media (hover:hover){.pillar:hover,.story:hover,.way:hover,.pcard:hover,.doc:hover,.vid:hover{transform:translateY(-3px)!important;box-shadow:0 2px 4px rgba(8,48,28,.06),0 22px 40px -22px rgba(8,48,28,.35)!important}}
+.vcard::before,.vcard::after,.stat::before,.stat::after,.pillar::before,.pillar::after{display:none!important}
+.mark,.orb{box-shadow:none!important}
+.mark{border-color:var(--surface)!important}
+.sdg,.sdg:hover{box-shadow:0 1px 2px rgba(0,0,0,.08)!important}
+.focus-card{box-shadow:none!important}
+.dtab[aria-selected="true"]{border:2px solid var(--orange)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 22%,transparent)!important}
+
+/* buttons: solid and simple; orange is kept for Donate and the main action */
+.btn::before,.btn::after,.links>a::after,.links .dd>button::after,.nav .icon-btn::after{display:none!important}
+.btn{border-radius:999px!important;box-shadow:none!important;transform:none;translate:none!important}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:var(--orange)!important;border:1px solid #D9860F!important;color:#2A1800!important}
+.btn.primary:hover{background:#E58B0C!important}
+.btn.green{background:var(--green)!important;border:1px solid var(--green)!important;color:#fff!important}
+.btn.line,.btn:not(.primary):not(.green):not(.ghost):not(.sm){background:transparent!important;border:1.5px solid var(--green)!important;color:var(--green)!important}
+:root[data-theme="dark"] .btn.line,:root[data-theme="dark"] .btn:not(.primary):not(.green):not(.ghost):not(.sm){border-color:#8FE3B6!important;color:#8FE3B6!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn.line,:root:not([data-theme="light"]) .btn:not(.primary):not(.green):not(.ghost):not(.sm){border-color:#8FE3B6!important;color:#8FE3B6!important}}
+.btn.ghost{background:transparent!important;border:1.5px solid rgba(255,255,255,.75)!important;color:#fff!important}
+
+/* navigation: quiet text links, current page in green */
+.links>a,.links .dd>button{background:transparent!important;border:0!important;box-shadow:none!important;color:var(--fg)!important;border-radius:10px!important;font-weight:600}
+.links>a:hover,.links .dd>button:hover,.links .dd.open>button{background:color-mix(in srgb,var(--green) 9%,transparent)!important;color:var(--fg)!important;transform:none!important}
+.links [aria-current="page"],.links .dd:has([aria-current="page"])>button{background:color-mix(in srgb,var(--green) 12%,transparent)!important;color:var(--green)!important}
+:root[data-theme="dark"] .links [aria-current="page"],:root[data-theme="dark"] .links .dd:has([aria-current="page"])>button{color:#8FE3B6!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .links [aria-current="page"],:root:not([data-theme="light"]) .links .dd:has([aria-current="page"])>button{color:#8FE3B6!important}}
+.nav .icon-btn,.nav .lang .icon-btn,.nav #lang{background:transparent!important;border:1px solid var(--rule)!important;color:var(--fg)!important;box-shadow:none!important}
+.nav .icon-btn:hover{background:color-mix(in srgb,var(--green) 9%,transparent)!important}
+.nav{box-shadow:0 1px 2px rgba(8,48,28,.05),0 10px 30px -22px rgba(8,48,28,.35)!important}
+
+/* headings and small labels */
+.eyebrow{color:var(--orange-ink)!important}
+.band .eyebrow,.hero .eyebrow{color:#FFD58A!important}
+.h2,h2{color:var(--fg)}
+.band h2,.band .h2,.hero h1{color:#fff}
+
+/* value chips: a still, wrapping row */
+.vchips{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
+.vchip{box-shadow:none!important;background:var(--surface)!important;border:1px solid var(--rule)!important;color:var(--fg)!important;animation:none!important}
+.vchip:hover{border-color:var(--c)!important}
+
+/* partner logos: a still grid */
+.pgrid{display:flex;flex-wrap:wrap;gap:14px;margin-top:20px}
+.pgrid .pitem{margin:0;background:var(--surface);border:1px solid var(--rule);box-shadow:none}
+
+/* footer: the woven strip along the top */
+footer.site{padding-top:64px}
+footer.site::before{content:"";position:absolute;left:0;right:0;top:0;height:8px;background:var(--weave)}
+
+/* call-to-action banner keeps a soft aurora wash; the cards inside are plain */
+.cta-band{border-radius:24px!important}
+
+/* reading comfort on phones */
+@media (max-width:760px){
+  main>section:not(.hero-sec){padding-block:56px}
+  .hero{border-radius:16px!important}
+  body{font-size:1.03rem}
+}
+:root[data-theme="dark"] :is(.vcard,.pillar,.stat,.way,.chan,.person,.story,.chartbox,.pcard,.doc,.pol,.dtab:not([aria-selected="true"]),.glass:not(.band .glass):not(.l-launch)){background:var(--surface)!important;border-color:var(--rule)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.vcard,.pillar,.stat,.way,.chan,.person,.story,.chartbox,.pcard,.doc,.pol,.dtab:not([aria-selected="true"]),.glass:not(.band .glass):not(.l-launch)){background:var(--surface)!important;border-color:var(--rule)!important}}
+/* editorial clean-up: straight edges, flat colours, no gloss */
+.band::before,footer.site::before{-webkit-mask:none!important;mask:none!important}
+footer.site::before{animation:none!important;height:8px!important;top:0!important;background:var(--weave)!important;z-index:4}
+.band::after{display:none!important}
+footer.site .field{display:none!important}
+footer.site{background:linear-gradient(180deg,#0A4630,#052619)!important}
+.rainbow{background:none!important;-webkit-text-fill-color:currentColor!important;color:inherit!important;animation:none!important}
+.sdg::before,.sdg::after{display:none!important}
+.vchip .orb{background:var(--c)!important;color:var(--on,#fff)!important;box-shadow:none!important}
+.two:has(#impDonut),.two:has(.chartbox){align-items:start!important}
+.pgrid .pitem{flex:1 1 auto;min-width:0;max-width:100%;margin:0!important;justify-content:center}
+.pgrid .pitem img{max-width:100%;height:auto;max-height:64px}
+@media (max-width:560px){.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pgrid .pitem{padding:10px;flex-direction:column;text-align:center;font-size:.85rem}.pgrid .pitem.wide img,.pgrid .pitem img{max-height:48px}}
+.pgrid .pitem span{white-space:normal;overflow-wrap:anywhere;min-width:0}

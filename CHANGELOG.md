@@ -1,5 +1,16 @@
 # Changelog
 
+## 18 November 2026 (evening): calm, editorial design
+- Calmer, photo-led look: plain light sections that alternate white and a soft green wash, generous spacing, and slightly larger body text.
+- Removed busy effects: tilting cards, floating 3D balls, morphing colour blobs, button ripples, magnetic buttons, the photo magnifier bubble, parallax, rainbow section borders and glows, the rainbow heading and glossy highlights.
+- Moving strips are now still: core values wrap in a tidy row, partner logos sit in a grid, and community photos can be swiped or scrolled.
+- One accent per job: navigation is quiet text with the current page in green; orange is kept for Donate and each section's main action; other buttons are green outlines.
+- Aurora light kept only in the hero, the green band and the "Be Part of the Change" banner.
+- A woven strip inspired by Northern Ghanaian cloth runs along the foot of the hero and the top of the footer.
+- Fixed missing icons: Water, Sanitation & Hygiene, and three policy headings (child safeguarding, gender and inclusion, data protection).
+- Fixed: the right-hand column of "Our impact in numbers" no longer floats in the middle of empty space.
+- Scripts loaded on the fly also get the version stamp, so updates always show at once.
+
 ## 18 November 2026 (later): card colours and legibility
 - Dark mode: cards no longer look black. They sit a clear step above the page, carry a hint of their own colour with a coloured top edge, and use clean shadows instead of fuzzy glows.
 - Dark mode: brighter body text, and icon tiles use a deeper shade so white symbols stay clear (for example "Our Vision").
