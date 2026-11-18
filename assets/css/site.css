@@ -1290,3 +1290,12 @@ footer.site{background:linear-gradient(180deg,#0A4630,#052619)!important}
 .pgrid .pitem img{max-width:100%;height:auto;max-height:64px}
 @media (max-width:560px){.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pgrid .pitem{padding:10px;flex-direction:column;text-align:center;font-size:.85rem}.pgrid .pitem.wide img,.pgrid .pitem img{max-height:48px}}
 .pgrid .pitem span{white-space:normal;overflow-wrap:anywhere;min-width:0}
+/* numbered "ways" cards count 01, 02, 03… on every page, whatever their container */
+:has(> .way){counter-reset:w}
+/* document file badges: flat colour tiles */
+.ftype{box-shadow:none!important;background-image:none!important;background-color:var(--c,#C0392B)!important}
+.ftype::before,.ftype::after{box-shadow:none!important}
+/* live player: when nothing is broadcasting, a compact plain panel instead of a large empty screen */
+.player{border-radius:var(--r)!important;box-shadow:0 1px 2px rgba(8,48,28,.05),0 18px 40px -26px rgba(8,48,28,.4)!important}
+.player:has(> .off){aspect-ratio:auto;min-height:230px}
+.player .off{background:linear-gradient(135deg,#0A4630,#052619)!important}

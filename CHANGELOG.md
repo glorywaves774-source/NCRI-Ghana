@@ -10,6 +10,7 @@
 - Fixed missing icons: Water, Sanitation & Hygiene, and three policy headings (child safeguarding, gender and inclusion, data protection).
 - Fixed: the right-hand column of "Our impact in numbers" no longer floats in the middle of empty space.
 - Scripts loaded on the fly also get the version stamp, so updates always show at once.
+- Applied across every page and the admin panel: flat document badges on Policies, Resources and Partnerships; a compact live panel on Media when nothing is broadcasting; "ways to help" cards numbered 01, 02, 03 on every page; the admin panel uses the same fonts, rounded buttons, calm cards and woven strip.
 
 ## 18 November 2026 (later): card colours and legibility
 - Dark mode: cards no longer look black. They sit a clear step above the page, carry a hint of their own colour with a coloured top edge, and use clean shadows instead of fuzzy glows.
