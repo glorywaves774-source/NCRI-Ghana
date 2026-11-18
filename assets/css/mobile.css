@@ -124,3 +124,7 @@ td.date,td.amount,td.code,time{white-space:nowrap}
 
 /* numbered badges: a deeper shade of their colour so white numbers stay readable */
 .mark.num{background:color-mix(in srgb,var(--c) 46%,#05261A)!important;color:#fff}
+
+/* Laari's round button: the avatar stays visible on phones (only the "Ask Laari" words hide) */
+.l-launch .l-av{display:grid!important}
+.hero-ui .count,.count{white-space:nowrap}
