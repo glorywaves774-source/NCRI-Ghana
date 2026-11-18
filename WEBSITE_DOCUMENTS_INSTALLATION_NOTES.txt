@@ -1,0 +1,25 @@
+NCRI-GHANA WEBSITE DOCUMENT PACK — INSTALLATION NOTES
+Date: 25 October 2026
+
+WHAT WAS ADDED
+- Complete governance and organisational policies manual copied into assets/docs/.
+- Fourteen separate Word documents, split by the manual's fourteen main sections.
+- Document seed records in assets/seed/documents.json.
+- Three additional policy sections for Child Safeguarding, Gender Equality & Inclusion, and Data Protection & Records.
+- Matching admin document category choices and static-preview download links.
+- WEBSITE_DOCUMENTS_MANIFEST.json listing the files and website destinations.
+
+WHERE THEY APPEAR
+- policies.html: policy-category documents are grouped under matching policy headings.
+- resources.html: the full manual, strategic programme framework, HR policy, MEAL framework and implementation document appear as resources.
+- Admin > Documents: after a fresh server database is initialized, seeded records are available for management.
+
+IMPORTANT
+All extracted documents retain draft status. They are not evidence of Board approval, legal registration, or statutory compliance. Fill in approval and effective dates only after formal adoption.
+
+DEPLOYMENT NOTE
+The server seeds assets/seed/documents.json only when its documents table is empty. If you are updating an already-running installation, use Admin > Documents to upload/publish the new files, or migrate the records into the existing database. The documents in assets/docs/ must be deployed alongside the website.
+
+Update 26 Oct 2026: seven partnership documents added (five briefs, a partner proposal template and an MoU template). They appear on the Partnerships page and in Admin > Documents. Existing databases receive them automatically on the next start (one-time migration). Legal review is needed before any MoU is signed.
+
+Update 26 Oct 2026: Board member Patience Lila Dibabe added (assets/seed/people.json, photo in assets/img/people/). Shows on About > Our people > Board of Directors and in Admin > People. Existing databases receive her automatically on the next start (one-time migration). Her photo is small (199x200 px); replace with a higher-resolution copy in Admin > People when available.

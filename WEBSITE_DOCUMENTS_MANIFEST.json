@@ -1,0 +1,151 @@
+{
+  "organisation": "Northern Community Resilience Initiative (NCRI-Ghana)",
+  "source_document": "NCRI-GHANA_Governance_and_Policies_Manual_REVISED(3).docx",
+  "created_on": "2026-10-25",
+  "status": "Draft for review and formal adoption",
+  "website_locations": {
+    "policies.html": "Policy documents are grouped under matching policy sections.",
+    "resources.html": "Full governance manual and strategic/MEAL/implementation documents.",
+    "admin/": "After deployment, the Admin > Documents area can manage published document records."
+  },
+  "documents": [
+    {
+      "title": "Governance, Administration and Organisational Policies Manual",
+      "category": "resource-report",
+      "file": "assets/docs/governance-administration-policies-manual.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Organisational Constitution and Governance Framework",
+      "category": "policy-accountability",
+      "file": "assets/docs/governance-framework.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Strategic Direction and Programme Framework",
+      "category": "resource-toolkit",
+      "file": "assets/docs/strategic-programme-framework.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Board Charter and Terms of Reference",
+      "category": "policy-accountability",
+      "file": "assets/docs/board-charter.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Human Resources and Staff Management Policy",
+      "category": "resource-toolkit",
+      "file": "assets/docs/human-resources-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Finance and Administration Policy",
+      "category": "policy-financial-management",
+      "file": "assets/docs/finance-administration-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Procurement and Asset Management Policy",
+      "category": "policy-procurement",
+      "file": "assets/docs/procurement-asset-management-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Child Safeguarding and Protection Policy",
+      "category": "policy-child-safeguarding",
+      "file": "assets/docs/child-safeguarding-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Gender Equality, Inclusion and Protection Policy",
+      "category": "policy-gender-inclusion",
+      "file": "assets/docs/gender-equality-inclusion-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Anti-Fraud, Anti-Bribery and Anti-Corruption Policy",
+      "category": "policy-anti-fraud-corruption",
+      "file": "assets/docs/anti-fraud-corruption-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Conflict of Interest Policy",
+      "category": "policy-conflict-of-interest",
+      "file": "assets/docs/conflict-of-interest-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Whistleblowing and Complaints Policy",
+      "category": "policy-complaints-whistleblowing",
+      "file": "assets/docs/whistleblowing-complaints-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Data Protection, Confidentiality and Records Policy",
+      "category": "policy-data-protection",
+      "file": "assets/docs/data-protection-records-policy.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Monitoring, Evaluation, Accountability and Learning (MEAL) Framework",
+      "category": "resource-toolkit",
+      "file": "assets/docs/meal-framework.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Implementation, Training, Review and Approval",
+      "category": "resource-toolkit",
+      "file": "assets/docs/implementation-review-approval.docx",
+      "status": "Draft"
+    },
+    {
+      "title": "Partnership Brief: Working Together",
+      "file": "assets/docs/partnership-brief-overview.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    },
+    {
+      "title": "Partnership Brief: Programme Partnership",
+      "file": "assets/docs/partnership-brief-programme.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    },
+    {
+      "title": "Partnership Brief: Funding Partnership",
+      "file": "assets/docs/partnership-brief-funding.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    },
+    {
+      "title": "Partnership Brief: Technical Partnership",
+      "file": "assets/docs/partnership-brief-technical.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    },
+    {
+      "title": "Partnership Brief: Community Partnership",
+      "file": "assets/docs/partnership-brief-community.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    },
+    {
+      "title": "Template: Partner Proposal",
+      "file": "assets/docs/partnership-proposal-template.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    },
+    {
+      "title": "Template: Memorandum of Understanding",
+      "file": "assets/docs/partnership-mou-template.docx",
+      "category": "partnership-brief",
+      "status": "Draft for review"
+    }
+  ],
+  "notes": [
+    "The documents are derived from the supplied governance manual; content has not been represented as formally adopted.",
+    "The website zip contains the files and seed metadata. Existing deployed websites must be updated with this ZIP or the changed files and assets/docs folder.",
+    "The site database seeds documents only on first initialization. If an existing deployment already has document records, add/import these documents through Admin > Documents or migrate the records; replacing files alone will not overwrite existing database content.",
+    "Before public release, confirm legal/regulatory requirements, Board approval, effective dates, contact/reporting channels, procurement thresholds and records-retention schedule."
+  ]
+}

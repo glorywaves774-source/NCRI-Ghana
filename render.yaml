@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: ncri-ghana
+    runtime: node
+    region: frankfurt
+    plan: starter
+    buildCommand: "echo no build step"
+    startCommand: "node --no-warnings server.js"
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: DATA_DIR
+        value: /var/data/ncri
+      - key: TRUST_PROXY
+        value: "1"
+      - key: BASE_URL
+        value: https://ncri-ghana.onrender.com
+      - key: ADMIN_EMAIL
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+    disk:
+      name: ncri-data
+      mountPath: /var/data
+      sizeGB: 1

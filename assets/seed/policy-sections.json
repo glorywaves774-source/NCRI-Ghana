@@ -1,0 +1,65 @@
+[
+  {
+    "key": "accountability",
+    "name": "Accountability",
+    "icon": "eye",
+    "color": "#0B5A3C",
+    "about": "How NCRI-Ghana answers to communities, partners and supporters for its decisions, spending and results."
+  },
+  {
+    "key": "anti-fraud-corruption",
+    "name": "Anti-fraud & Anti-corruption",
+    "icon": "shield",
+    "color": "#B4452A",
+    "about": "Zero tolerance for fraud, bribery and the misuse of resources, with clear steps for prevention, detection and response."
+  },
+  {
+    "key": "complaints-whistleblowing",
+    "name": "Complaints & Whistleblowing",
+    "icon": "link",
+    "color": "#2B6CB0",
+    "about": "Safe, confidential ways for anyone to raise a concern or complaint, and protection for those who speak up."
+  },
+  {
+    "key": "conflict-of-interest",
+    "name": "Conflict of Interest",
+    "icon": "scales",
+    "color": "#7A4BC4",
+    "about": "How directors, staff, volunteers and partners declare and manage personal or financial interests."
+  },
+  {
+    "key": "financial-management",
+    "name": "Financial Management",
+    "icon": "bulb",
+    "color": "#B57800",
+    "about": "Budgeting, controls, record-keeping and reporting so funds are used well and can be traced."
+  },
+  {
+    "key": "procurement",
+    "name": "Procurement",
+    "icon": "home",
+    "color": "#157A7A",
+    "about": "Fair, open and value-for-money buying of goods and services, with documented selection of suppliers."
+  },
+  {
+    "key": "child-safeguarding",
+    "name": "Child Safeguarding & Protection",
+    "icon": "shield-check",
+    "color": "#B4452A",
+    "about": "Preventing and responding to abuse, exploitation, neglect and other harm to children."
+  },
+  {
+    "key": "gender-inclusion",
+    "name": "Gender Equality & Inclusion",
+    "icon": "heart-handshake",
+    "color": "#D6527E",
+    "about": "Promoting equality, dignity, meaningful participation and protection from discrimination and gender-based violence."
+  },
+  {
+    "key": "data-protection",
+    "name": "Data Protection & Records",
+    "icon": "lock-keyhole",
+    "color": "#4A63D8",
+    "about": "Protecting personal information, confidential records and sensitive safeguarding data."
+  }
+]

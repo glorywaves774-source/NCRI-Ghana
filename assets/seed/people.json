@@ -1,0 +1,26 @@
+[
+ {
+  "grp": "management",
+  "name": "John Kombian",
+  "role": "Managing Director",
+  "photo": "assets/img/people/john-kombian.jpg",
+  "published": 1,
+  "bio": "Development professional and education practitioner with expertise in project management, supervision and coordination. He holds a BSc in Business Administration (Human Resource Management), a Google Project Management Certificate and ALX's Professional Development Skills for the Digital Age. He has served with the Holistic Development Organization (HOLIDO), Health-Aid Onlus and SEND-GHANA, and sits on the Board of Saboba Youth Centre. As Managing Director he leads NCRI-Ghana's strategy, partnerships and programmes for stronger, more inclusive and resilient communities."
+ },
+ {
+  "grp": "board",
+  "name": "Mr. Jutta Tibe Kombian",
+  "role": "Board Member",
+  "photo": "assets/img/people/jutta-tibe-kombian.jpg",
+  "published": 1,
+  "bio": "Cybersecurity and digital forensics professional (MSc Cyber Security and Digital Forensics) and Management Information Systems Officer at the Saboba District Assembly. He has also served as Scholarship Coordinator at Health-Aid Onlus and Media and Communications Officer at Saboba Youth Centre. On the Board he contributes to governance, information security, safeguarding digital assets and education-focused, community-led initiatives."
+ },
+ {
+  "grp": "board",
+  "name": "Patience Lila Dibabe",
+  "role": "Board Member, Communications, Strategic Partnerships and Community Engagement",
+  "photo": "assets/img/people/patience-lila-dibabe.jpg",
+  "published": 1,
+  "bio": "Marketing professional and community development advocate with a BSc in Marketing from the University of Professional Studies, Accra (UPSA). She was Acting Vice President of the BSc Marketing Students’ Association (BaMSA), President of the Rotaract Club of Accra Ring Road Central (2022/2023) and Assistant District Rotaract Representative for Cluster E, Rotary International District 9104 (2024/2025). She has taken part in community health awareness and screening work, has field survey and customer service experience, and works at First Bank in Accra. On the Board she leads Communications, Strategic Partnerships and Community Engagement, supporting messaging and public relations, partnership development, fundraising and donor engagement, outreach to communities and traditional authorities, and stakeholder relations."
+ }
+]

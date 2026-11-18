@@ -1,0 +1,8 @@
+{
+  "name": "ncri-ghana-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NCRI-Ghana website with admin panel, Laari chat and donations. No npm packages needed.",
+  "engines": { "node": ">=22.5" },
+  "scripts": { "start": "node --no-warnings server.js" }
+}
