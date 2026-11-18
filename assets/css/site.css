@@ -1033,9 +1033,10 @@ footer.site .social a{border-radius:50%}
 *,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 .glass::after{display:none!important}
 .liquid,.goals,.l-launch,.hero .pill,.hero .notice,.tabs.glass,.vglass{animation:none!important}
-.nav,.mmenu,.langmenu,.l-launch,.tabs.glass,.admin-fab,.cta-band,.sdg-detail,.empty.glass,.fm.glass,
-.liquid:not(.panel),.glass:not(.band .glass){
+.nav,.mmenu,.langmenu,.l-launch,.tabs.glass,.admin-fab,.cta-band,.liquid:not(.panel){
   background:var(--surface)!important;border:1px solid var(--surface-edge)!important;box-shadow:var(--soft)!important}
+/* cards keep their own borders, shadows and selected states; only their fill is made solid */
+.glass:not(.band .glass):not(.vcard):not(.pillar):not(.stat):not(.way){background-color:var(--surface)}
 
 /* 2. the aurora behind the whole page */
 html{background:var(--bg)}
@@ -1116,3 +1117,56 @@ footer.site input{background:#0C3D29!important;border-color:rgba(255,255,255,.22
 .nav .icon-btn,.nav .icon-btn#burger,.nav .lang .icon-btn,.nav #lang{--w:var(--green)!important;color:#fff}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .links>a,:root:not([data-theme="light"]) .links .dd>button{color:#CFEFDC}}
 :root[data-theme="dark"] .links>a,:root[data-theme="dark"] .links .dd>button{color:#CFEFDC}
+
+
+/* =====================================================================
+   CARD COLOURS AND LEGIBILITY
+   Dark mode: cards sit a clear step above the page, carry a hint of their
+   own colour, text is brighter, and icon tiles keep white symbols readable.
+   Both modes: selected options are clearly marked.
+   ===================================================================== */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0A1A12;--surface:#14291F;--surface-2:#1B3529;--surface-edge:rgba(190,240,210,.14);
+  --fg:#EEF6F0;--muted:#BCD2C4;--line:rgba(232,243,235,.18);
+  --soft:0 1px 0 rgba(255,255,255,.05) inset,0 18px 40px -20px rgba(0,0,0,.8)}}
+:root[data-theme="dark"]{
+  --bg:#0A1A12;--surface:#14291F;--surface-2:#1B3529;--surface-edge:rgba(190,240,210,.14);
+  --fg:#EEF6F0;--muted:#BCD2C4;--line:rgba(232,243,235,.18);
+  --soft:0 1px 0 rgba(255,255,255,.05) inset,0 18px 40px -20px rgba(0,0,0,.8)}
+:root{--surface-2:color-mix(in srgb,var(--green) 4%,#fff)}
+
+/* dark mode: each coloured card carries a hint of its own colour, with a coloured top edge */
+:root[data-theme="dark"] :is(.vcard,.pillar,.stat,.way,.chan,.person,.story,.chartbox,.pcard,.doc,.pol,.dtab),
+:root:not([data-theme="light"]) :is(.vcard,.pillar,.stat,.way,.chan,.person,.story,.chartbox,.pcard,.doc,.pol,.dtab){--cc:var(--c,var(--green2))}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) :is(.vcard,.pillar,.stat,.way,.chan,.person,.story,.chartbox,.pcard,.doc,.pol,.dtab,.glass:not(.band .glass)){
+    background:linear-gradient(180deg,color-mix(in srgb,var(--c,var(--green2)) 13%,var(--surface)),var(--surface) 70%)!important;
+    border-color:var(--surface-edge)}
+  :root:not([data-theme="light"]) :is(.vcard,.way,.chan,.stat,.dtab){border-top:3px solid color-mix(in srgb,var(--c,var(--green2)) 80%,#fff)!important}
+}
+:root[data-theme="dark"] :is(.vcard,.pillar,.stat,.way,.chan,.person,.story,.chartbox,.pcard,.doc,.pol,.dtab,.glass:not(.band .glass)){
+  background:linear-gradient(180deg,color-mix(in srgb,var(--c,var(--green2)) 13%,var(--surface)),var(--surface) 70%)!important;border-color:var(--surface-edge)}
+:root[data-theme="dark"] :is(.vcard,.way,.chan,.stat,.dtab){border-top:3px solid color-mix(in srgb,var(--c,var(--green2)) 80%,#fff)!important}
+
+/* dark mode: icon tiles a deeper shade so white symbols stay clear */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .mark:not(.num){background:color-mix(in srgb,var(--c,var(--orange)) 62%,#04140C)!important;color:#fff}}
+:root[data-theme="dark"] .mark:not(.num){background:color-mix(in srgb,var(--c,var(--orange)) 62%,#04140C)!important;color:#fff}
+
+/* form fields and amount buttons: clearly raised from the card in both modes */
+.fld input,.fld textarea,.fld select,.amt{background:var(--surface-2)!important;border-color:color-mix(in srgb,var(--fg) 22%,transparent)!important}
+.fld input::placeholder,.fld textarea::placeholder{color:color-mix(in srgb,var(--fg) 55%,transparent)}
+
+/* selected options are unmistakable */
+.dtab[aria-selected="true"]{border:2px solid var(--orange)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--orange) 30%,transparent),var(--soft)!important;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--orange) 16%,var(--surface)),var(--surface))!important}
+.dtab[aria-selected="true"] h3::after{content:"  ✓";color:var(--orange)}
+.amt[aria-pressed="true"]{background:var(--orange)!important;border-color:var(--orange)!important;color:#2A1800!important}
+.sdg-detail{border-left:6px solid var(--c)!important}
+
+/* longer text on cards: a touch larger and with more line spacing */
+.vcard p,.pillar p,.way p,.chan p,.dtab p,.trio>.glass p{line-height:1.65}
+.muted,.vcard p,.dtab p,.chan p{color:var(--muted)}
+
+/* dark mode: clean shadows instead of coloured glows around plain cards, so edges stay crisp */
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.chan,.way,.dtab:not([aria-selected="true"]),.glass:not(.vcard):not(.pillar):not(.stat):not(.band .glass):not(.l-launch)){box-shadow:var(--soft)!important}}
+:root[data-theme="dark"] :is(.chan,.way,.dtab:not([aria-selected="true"]),.glass:not(.vcard):not(.pillar):not(.stat):not(.band .glass):not(.l-launch)){box-shadow:var(--soft)!important}

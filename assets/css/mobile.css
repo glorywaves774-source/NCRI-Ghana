@@ -123,4 +123,4 @@ td.date,td.amount,td.code,time{white-space:nowrap}
 }
 
 /* numbered badges: a deeper shade of their colour so white numbers stay readable */
-.mark.num{background:color-mix(in srgb,var(--c) 58%,#05261A)!important;color:#fff}
+.mark.num{background:color-mix(in srgb,var(--c) 46%,#05261A)!important;color:#fff}

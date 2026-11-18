@@ -1,5 +1,12 @@
 # Changelog
 
+## 18 November 2026 (later): card colours and legibility
+- Dark mode: cards no longer look black. They sit a clear step above the page, carry a hint of their own colour with a coloured top edge, and use clean shadows instead of fuzzy glows.
+- Dark mode: brighter body text, and icon tiles use a deeper shade so white symbols stay clear (for example "Our Vision").
+- Form fields and amount buttons are clearly raised from their card in both modes.
+- The selected giving option (Local / International / Online) has a clear orange outline and a tick again, and a chosen amount is filled orange. The coloured edge on the SDG detail card is back.
+- Numbered badges on the About page are a deeper shade so the numbers are easy to read.
+
 ## 18 November 2026: Aurora UI, phone navigation and dark mode
 
 **Look**
