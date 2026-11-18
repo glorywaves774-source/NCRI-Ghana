@@ -433,7 +433,7 @@
   var resolveReady; NCRI.ready = new Promise(function (r) { resolveReady = r; });
   function start() {
     injectFilters(); renderHeader(); pageHero(); progressBar(); pointerFx();
-    (NCRI.calm ? ['translate'] : ['translate', 'motion', 'lens']).forEach(function (n) { var sc = document.createElement('script'); sc.src = 'assets/js/' + n + '.js' + (VER ? '?v=' + VER : ''); document.head.appendChild(sc); });
+    (NCRI.calm ? ['translate', 'flow'] : ['translate', 'motion', 'lens', 'flow']).forEach(function (n) { var sc = document.createElement('script'); sc.src = 'assets/js/' + n + '.js' + (VER ? '?v=' + VER : ''); document.head.appendChild(sc); });
     NCRI.get('bootstrap').then(function (b) {
       NCRI.settings = b.settings || {}; NCRI.partners = b.partners || []; NCRI.boot = b;
     }).catch(function () { /* the pages still render with their built-in text */ }).then(function () {

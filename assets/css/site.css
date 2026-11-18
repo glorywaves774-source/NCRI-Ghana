@@ -1299,3 +1299,63 @@ footer.site{background:linear-gradient(180deg,#0A4630,#052619)!important}
 .player{border-radius:var(--r)!important;box-shadow:0 1px 2px rgba(8,48,28,.05),0 18px 40px -26px rgba(8,48,28,.4)!important}
 .player:has(> .off){aspect-ratio:auto;min-height:230px}
 .player .off{background:linear-gradient(135deg,#0A4630,#052619)!important}
+
+/* =====================================================================
+   MOTION (calm and purposeful; all of it stops for "reduce motion")
+   ===================================================================== */
+:root{--ease:cubic-bezier(.16,1,.3,1)}
+/* reveals: a clean rise, no blur or 3D tilt */
+.js .rv{transform:translate3d(0,26px,0)!important;filter:none!important;transition:opacity .8s var(--ease),transform .9s var(--ease)!important;transition-delay:var(--dl,0s)!important}
+.js .rv.in{transform:none!important}
+
+/* groups flow in one after another */
+html.flow .stagger>*{opacity:0;transform:translate3d(0,22px,0)}
+html.flow .stagger.seen>*{opacity:1;transform:none;transition:opacity .7s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--i,0) * 70ms)}
+html.flow .vchips.stagger>*,html.flow .pgrid.stagger>*{transform:translate3d(0,10px,0) scale(.96)}
+html.flow .vchips.stagger.seen>*,html.flow .pgrid.stagger.seen>*{transform:none}
+
+/* headings rise into place */
+html.flow .lift{opacity:0;transform:translate3d(0,14px,0)}
+html.flow .lift.seen{opacity:1;transform:none;transition:opacity .8s var(--ease),transform .9s var(--ease)}
+
+/* the woven strip draws itself across: along the hero on arrival, along the footer when it comes into view */
+.hero::after{animation:weaveIn 1.6s var(--ease) .35s both}
+html.flow footer.site::before{clip-path:inset(0 100% 0 0);transition:clip-path 1.6s var(--ease)}
+html.flow footer.site.seen::before{clip-path:inset(0 0 0 0)}
+@keyframes weaveIn{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+nav.side::before{animation:weaveIn 1.4s var(--ease) .2s both}
+
+/* charts draw their rings */
+html.flow .drawable circle.s{stroke-dashoffset:0}
+html.flow .drawable:not(.seen) circle.s{opacity:0}
+html.flow .drawable.seen circle.s{animation:ringIn 1.3s var(--ease) both}
+html.flow .drawable.seen circle.s:nth-of-type(2){animation-delay:.12s}html.flow .drawable.seen circle.s:nth-of-type(3){animation-delay:.24s}html.flow .drawable.seen circle.s:nth-of-type(4){animation-delay:.36s}
+@keyframes ringIn{from{opacity:0;stroke-dasharray:0 2000}}
+
+/* aurora light drifts slowly in the hero and the call-to-action banner */
+.slide::after{background-size:140% 140%,140% 140%,100% 100%!important;animation:auroraPan 26s ease-in-out infinite alternate}
+@keyframes auroraPan{from{background-position:0% 100%,0% 0%,0 0}to{background-position:30% 70%,25% 20%,0 0}}
+.cta-band::before{inset:-15%!important;animation:aurora 32s ease-in-out infinite alternate}
+
+/* hero text arrives in sequence with each slide */
+.hero .slide.on .panel>*{animation:rise .9s var(--ease) both}
+.hero .slide.on .panel>*:nth-child(2){animation-delay:.08s}.hero .slide.on .panel>*:nth-child(3){animation-delay:.16s}.hero .slide.on .panel>*:nth-child(4){animation-delay:.24s}.hero .slide.on .panel>*:nth-child(5){animation-delay:.32s}
+
+/* small touches on hover */
+.btn svg,.link-more svg,.l-link svg,.focus-card svg:last-child{transition:transform .3s var(--ease)}
+.btn:hover svg,a:hover>.link-more svg,.link-more:hover svg,.pillar:hover .link-more svg,.story:hover svg,.focus-card:hover svg:last-child{transform:translateX(4px)}
+.links>a,.links .dd>button{text-decoration:underline 2px transparent;text-underline-offset:7px;transition:text-decoration-color .25s,background-color .25s,color .25s}
+.links>a:hover,.links .dd>button:hover{text-decoration-color:var(--green)}
+.vchip{transition:transform .3s var(--ease),border-color .3s}
+@media (hover:hover){.vchip:hover,.pgrid .pitem:hover{transform:translateY(-3px)}}
+.pgrid .pitem{transition:transform .3s var(--ease)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.focus-card{transition:transform .3s var(--ease),background-color .25s}
+
+@media (prefers-reduced-motion:reduce){
+  .hero::after,nav.side::before,.slide::after,.cta-band::before,.hero .slide.on .panel>*{animation:none!important}
+  .js .rv{opacity:1!important;transform:none!important;transition:none!important}
+}
+/* value chips line up with the page content */
+.vchips{max-width:1240px;margin-left:auto;margin-right:auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));box-sizing:border-box}
+@media (max-width:760px){.vchips{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}}

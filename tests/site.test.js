@@ -98,3 +98,13 @@ test('stylesheet and script links carry a per-deploy version so updates show at 
     links.forEach(l => assert.match(l, /\?v=\w+$/, p + ' ' + l));
   }
 });
+
+test('motion: flow script is loaded, and every motion stops for reduced motion', () => {
+  const core = fs.readFileSync(path.join(ROOT, 'assets/js/core.js'), 'utf8');
+  const flow = fs.readFileSync(path.join(ROOT, 'assets/js/flow.js'), 'utf8');
+  const css = fs.readFileSync(path.join(ROOT, 'assets/css/site.css'), 'utf8');
+  assert.match(core, /\['translate', 'flow'\]/, 'flow loads in the calm design');
+  assert.match(flow, /NCRI\.reduce/, 'flow does nothing for reduce motion');
+  const motion = css.slice(css.indexOf('MOTION (calm and purposeful'));
+  assert.match(motion, /@media \(prefers-reduced-motion:reduce\)/);
+});

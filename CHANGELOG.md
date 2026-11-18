@@ -1,5 +1,16 @@
 # Changelog
 
+## 18 November 2026 (night): motion
+- Groups of cards, value chips and partner logos flow in one after another as they scroll into view; section headings rise gently into place.
+- The woven strip draws itself across the hero on arrival, across the footer when it comes into view, and across the admin menu and sign-in.
+- Charts on the home and Impact pages draw their rings in.
+- Aurora light drifts slowly in the hero and the "Be Part of the Change" banner.
+- Hero text arrives in sequence with each slide.
+- Small touches on hover: arrows nudge forward, menu links get an underline, chips and logos lift slightly, buttons press in.
+- Admin dashboard cards fade in one after another.
+- Reveals are a clean rise (no blur or 3D tilt), so they stay smooth on low-cost phones.
+- Every motion switches off for visitors who choose "reduce motion" on their device.
+
 ## 18 November 2026 (evening): calm, editorial design
 - Calmer, photo-led look: plain light sections that alternate white and a soft green wash, generous spacing, and slightly larger body text.
 - Removed busy effects: tilting cards, floating 3D balls, morphing colour blobs, button ripples, magnetic buttons, the photo magnifier bubble, parallax, rainbow section borders and glows, the rainbow heading and glossy highlights.
