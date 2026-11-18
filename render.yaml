@@ -15,7 +15,7 @@ services:
       - key: TRUST_PROXY
         value: "1"
       - key: BASE_URL
-        value: https://ncri-ghana.onrender.com
+        value: https://ncri-ghana-meyl.onrender.com
       - key: ADMIN_EMAIL
         sync: false
       - key: ADMIN_PASSWORD
