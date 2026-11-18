@@ -1465,3 +1465,47 @@ main :is(.tabs,.chips).glass:not(.band .glass):not(.l-launch),main .tabs,main .c
 .dr-g{gap:0!important}.dr-g a{margin:0!important}
 .dr-g:has(.dr-h) a:not(:last-child){border-radius:0}
 .dr-g:has(.dr-h) .dr-h+a:last-child{border-radius:12px}
+
+/* =====================================================================
+   SMOOTH: AURORA + SPATIAL (solid surfaces, no glass)
+   Aurora: one soft, slowly drifting light field behind the whole page,
+   with sections flowing into one another instead of hard colour bands.
+   Spatial: panels float in layers with natural depth (ambient + key
+   shadows), rounder corners, and smooth spring lifts on touch.
+   ===================================================================== */
+:root{
+  --elev-1:0 1px 1px rgba(8,48,28,.03),0 2px 4px rgba(8,48,28,.04),0 10px 20px -6px rgba(8,48,28,.08),0 28px 56px -18px rgba(8,48,28,.16);
+  --elev-2:0 1px 2px rgba(8,48,28,.04),0 4px 8px rgba(8,48,28,.05),0 18px 36px -8px rgba(8,48,28,.12),0 44px 80px -24px rgba(8,48,28,.24);
+  --elev-hi:inset 0 1px 0 rgba(255,255,255,.7);--r:20px;--au-a:.24}
+:root[data-theme="dark"]{--elev-1:0 1px 1px rgba(0,0,0,.3),0 10px 24px -8px rgba(0,0,0,.55),0 30px 60px -20px rgba(0,0,0,.7);--elev-2:0 2px 4px rgba(0,0,0,.35),0 22px 44px -10px rgba(0,0,0,.6),0 50px 90px -26px rgba(0,0,0,.75);--elev-hi:inset 0 1px 0 rgba(255,255,255,.07);--au-a:.16}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--elev-1:0 1px 1px rgba(0,0,0,.3),0 10px 24px -8px rgba(0,0,0,.55),0 30px 60px -20px rgba(0,0,0,.7);--elev-2:0 2px 4px rgba(0,0,0,.35),0 22px 44px -10px rgba(0,0,0,.6),0 50px 90px -26px rgba(0,0,0,.75);--elev-hi:inset 0 1px 0 rgba(255,255,255,.07);--au-a:.16}}
+
+/* aurora light field behind the page */
+html body::after{display:block!important;opacity:var(--au-a);filter:blur(56px)}
+html body:has(#site-header) main>section:not(.hero-sec):not(.band),
+html body:has(#site-header) main>section:not(.hero-sec):not(.band):nth-of-type(n){background:transparent!important}
+html body:has(#site-header) main>section.phero{background:transparent!important}
+/* a soft veil keeps long reading areas calm and readable over the light */
+html body:has(#site-header) main>section:not(.hero-sec):not(.band):nth-of-type(even)::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--surface) 55%,transparent) 18%,color-mix(in srgb,var(--surface) 55%,transparent) 82%,transparent)}
+html body:has(#site-header) main>section:not(.hero-sec):not(.band){isolation:isolate}
+
+/* spatial: floating layers */
+html body:has(#site-header) :is(.glass:not(.band .glass):not(.l-launch),.pillar,.stat,.way,.vid,.dtab:not([aria-selected="true"]),.chan,.tile,.vcard,.person,.story,.pcard,.doc,.pol,.chartbox,.acc){
+  border-radius:var(--r)!important;box-shadow:var(--elev-hi),var(--elev-1)!important;border-color:color-mix(in srgb,var(--fg) 7%,transparent)!important}
+html body:has(#site-header) :is(.pillar,.story,.way,.pcard,.doc,.vid,.vcard,.person,.chan,.dtab,.stat){transition:transform .5s var(--spring),box-shadow .5s var(--spring)!important}
+@media (hover:hover){html body:has(#site-header) :is(.pillar,.story,.way,.pcard,.doc,.vid,.vcard,.person,.chan,.stat):hover{transform:translateY(-5px)!important;box-shadow:var(--elev-hi),var(--elev-2)!important}}
+.nav{box-shadow:var(--elev-hi),var(--elev-1)!important;border-radius:22px!important}
+.hero{box-shadow:var(--elev-2)!important;border-radius:28px!important}
+.cta-band{box-shadow:var(--elev-hi),var(--elev-2)!important;border-radius:28px!important}
+.drawer{box-shadow:var(--elev-2)!important}
+
+/* the green feature band floats as a rounded panel */
+html body:has(#site-header) main>section.band{width:min(1240px,calc(100% - 28px))!important;margin:clamp(24px,4vw,48px) auto!important;border-radius:28px!important;
+  box-shadow:var(--elev-2)!important;overflow:hidden}
+html body:has(#site-header) main>section.band .glass,html body:has(#site-header) .focus-card{border-radius:16px!important}
+@media (max-width:640px){html body:has(#site-header) main>section.band{width:calc(100% - 20px)!important;border-radius:22px!important}}
+
+/* smoother scrolling and focus */
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}html body::after{animation:none!important}}

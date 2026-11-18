@@ -1,5 +1,12 @@
 # Changelog
 
+## 18 November 2026 (late): smoother, with Aurora and Spatial UI
+- Aurora: a soft, slowly drifting light field (brand greens, teal and orange) now sits behind every page, faint enough not to compete with the photos. Sections flow into one another instead of hard white and green bands.
+- Spatial: panels float in layers with natural depth; cards, the menu bar, the hero and the banner have rounder corners and lift smoothly when touched.
+- The green feature band is now a floating rounded panel.
+- On phones the tab bar floats as a rounded bar above the bottom edge.
+- Smooth scrolling between sections. All motion still stops for "reduce motion"; all surfaces stay solid (no glass).
+
 ## 18 November 2026 (late): Apple UI
 - Interface text uses Apple's system font (San Francisco on iPhone, iPad and Mac; Figtree elsewhere); serif headings stay.
 - Every button, link and control is at least 44 pixels tall, as Apple recommends for fingers.
