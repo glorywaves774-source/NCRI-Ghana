@@ -69,8 +69,6 @@
     host.addEventListener('pointerdown', function (e) { if (!e.target.closest('button,a')) sx = e.clientX; });
     host.addEventListener('pointerup', function (e) { if (sx === null) return; var dx = e.clientX - sx; sx = null; if (Math.abs(dx) > 50) { host.classList.add('anim'); go(idx + (dx < 0 ? 1 : -1)); } });
     $$('[data-open]', host).forEach(function (b) { b.addEventListener('click', function (e) { PillarViewer.open(progs, +b.dataset.open, e); }); });
-    /* clear bubble magnifier over the current picture (not over the text panel or controls) */
-    if (NCRI.lens) NCRI.lens(host, host, function () { var on = $('.slide.on', host); return on && on.dataset.photo; }, { size: 170, zoom: 2.1, avoid: '.panel,.hero-ui,.notice,button,a' });
     go(0); host.classList.add('anim');
   }
 

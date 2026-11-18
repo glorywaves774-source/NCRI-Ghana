@@ -108,3 +108,10 @@ test('motion: flow script is loaded, and every motion stops for reduced motion',
   const motion = css.slice(css.indexOf('MOTION (calm and purposeful'));
   assert.match(motion, /@media \(prefers-reduced-motion:reduce\)/);
 });
+
+test('the photo magnifier is gone', () => {
+  assert.ok(!fs.existsSync(path.join(ROOT, 'assets/js/lens.js')), 'lens.js removed');
+  for (const p of PAGES) assert.doesNotMatch(fs.readFileSync(path.join(ROOT, p), 'utf8'), /lens\.js/, p);
+  assert.doesNotMatch(fs.readFileSync(path.join(ROOT, 'assets/js/core.js'), 'utf8'), /'lens'|id="lens"/);
+  assert.doesNotMatch(fs.readFileSync(path.join(ROOT, 'assets/js/pages/home.js'), 'utf8'), /NCRI\.lens/);
+});

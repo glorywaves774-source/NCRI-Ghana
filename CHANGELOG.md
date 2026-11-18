@@ -1,6 +1,7 @@
 # Changelog
 
 ## 18 November 2026 (night): motion
+- The photo magnifier bubble is removed from the whole site (it was still on the home page hero).
 - Groups of cards, value chips and partner logos flow in one after another as they scroll into view; section headings rise gently into place.
 - The woven strip draws itself across the hero on arrival, across the footer when it comes into view, and across the admin menu and sign-in.
 - Charts on the home and Impact pages draw their rings in.

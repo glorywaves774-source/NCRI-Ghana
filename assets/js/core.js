@@ -284,7 +284,7 @@
     var d = document.createElement('div');
     d.innerHTML = '<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>' +
       '<filter id="lg" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.011 0.018" numOctaves="2" seed="7" result="n"/><feGaussianBlur in="n" stdDeviation="2.5" result="b"/><feDisplacementMap in="SourceGraphic" in2="b" scale="22" xChannelSelector="R" yChannelSelector="G"/></filter>' +
-      '<filter id="lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="1" seed="2" result="n"/><feGaussianBlur in="n" stdDeviation="3" result="b"/><feDisplacementMap in="SourceGraphic" in2="b" scale="46" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>';
+      '</defs></svg>';
     document.body.appendChild(d.firstChild);
     try { var br = navigator.userAgentData && navigator.userAgentData.brands; if ((br && br.some(function (b) { return /Chromium/.test(b.brand); })) || (!br && window.chrome)) /* liquid-glass refraction switched off (Aurora UI) */; } catch (e) { /* plain glass */ }
   }
@@ -433,7 +433,7 @@
   var resolveReady; NCRI.ready = new Promise(function (r) { resolveReady = r; });
   function start() {
     injectFilters(); renderHeader(); pageHero(); progressBar(); pointerFx();
-    (NCRI.calm ? ['translate', 'flow'] : ['translate', 'motion', 'lens', 'flow']).forEach(function (n) { var sc = document.createElement('script'); sc.src = 'assets/js/' + n + '.js' + (VER ? '?v=' + VER : ''); document.head.appendChild(sc); });
+    (NCRI.calm ? ['translate', 'flow'] : ['translate', 'motion', 'flow']).forEach(function (n) { var sc = document.createElement('script'); sc.src = 'assets/js/' + n + '.js' + (VER ? '?v=' + VER : ''); document.head.appendChild(sc); });
     NCRI.get('bootstrap').then(function (b) {
       NCRI.settings = b.settings || {}; NCRI.partners = b.partners || []; NCRI.boot = b;
     }).catch(function () { /* the pages still render with their built-in text */ }).then(function () {
