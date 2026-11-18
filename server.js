@@ -516,6 +516,9 @@ function notFound(req, res) {
   else send(res, 404, 'Not found', { 'Content-Type': 'text/plain' });
 }
 const inside = (base, f) => f === base || f.startsWith(base + path.sep);
+/* every deploy gets its own version, added to stylesheet and script links so browsers fetch fresh copies after an update */
+const VERSION = String(process.env.RENDER_GIT_COMMIT || '').slice(0, 10) || Date.now().toString(36);
+const stamp = html => html.replace(/(<(?:script|link)\b[^>]*?\b(?:src|href)=")((?!https?:|\/\/)[^"?#]+\.(?:css|js))"/g, '$1$2?v=' + VERSION + '"');
 function serveStatic(req, res, pathname) {
   let p; try { p = decodeURIComponent(pathname); } catch (e) { return notFound(req, res); }
   if (p.includes('\0') || /(^|\/)\./.test(p)) return notFound(req, res);
@@ -527,7 +530,7 @@ function serveStatic(req, res, pathname) {
   const f = path.normalize(path.join(ROOT, p));
   const okTop = (/^\/[a-z0-9-]+\.html$/.test(p) || /^\/(assets|admin)\//.test(p)) && !/^\/assets\/seed\//.test(p);
   if (!okTop || !inside(ROOT, f)) return notFound(req, res);
-  if (/\.html$/.test(f) && !/^\/admin\//.test(p)) return fs.readFile(f, 'utf8', (e, t) => e ? notFound(req, res) : send(res, 200, req.method === 'HEAD' ? null : t.split('{{BASE_URL}}').join(BASE_URL), { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-cache', 'Content-Security-Policy': CSP }));
+  if (/\.html$/.test(f)) return fs.readFile(f, 'utf8', (e, t) => e ? notFound(req, res) : send(res, 200, req.method === 'HEAD' ? null : stamp(/^\/admin\//.test(p) ? t : t.split('{{BASE_URL}}').join(BASE_URL)), { 'Content-Type': MIME['.html'], 'Cache-Control': 'no-cache', 'Content-Security-Policy': CSP }));
   serveFile(req, res, f);
 }
 

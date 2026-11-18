@@ -89,3 +89,12 @@ test('an admin edit to a person survives a restart (one-time update runs once)',
   assert.ok(db.prepare("SELECT 1 x FROM migrations WHERE k='people_md_bio3'").get(), 'bio update is recorded as done');
   db.close();
 });
+
+test('stylesheet and script links carry a per-deploy version so updates show at once', async () => {
+  for (const p of ['/about.html', '/admin/']) {
+    const html = await (await fetch(base + p)).text();
+    const links = [...html.matchAll(/(?:src|href)="((?!https?:)[^"]+\.(?:css|js)[^"]*)"/g)].map(m => m[1]);
+    assert.ok(links.length > 2, p);
+    links.forEach(l => assert.match(l, /\?v=\w+$/, p + ' ' + l));
+  }
+});
