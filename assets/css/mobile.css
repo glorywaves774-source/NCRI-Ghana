@@ -1,0 +1,126 @@
+/* NCRI-Ghana phone and tablet layer. Loaded last on every page.
+   Menu drawer (slides in from the left), bottom tab bar on phones, Laari half-screen chat,
+   no sideways scrolling, 16px form fields, safe areas, and white printouts. */
+
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:clip}
+
+/* ---------- header: menu button sits top-left ---------- */
+.nav .burger{order:-1;margin-right:2px}
+@media (max-width:1100px){
+  .nav{gap:8px;padding:8px 10px}
+  .nav .burger{display:grid}
+  .nav .brand{margin-right:auto}
+}
+@media (max-width:760px){
+  .nav .hdr-donate{display:none}               /* Donate is in the tab bar on phones */
+  .nav .brand img{width:38px;height:auto}
+  .nav-wrap{top:calc(env(safe-area-inset-top,0px) + 6px);padding-top:6px}
+}
+@media (max-width:340px){.nav .brand span{display:none}}
+
+/* ---------- menu drawer ---------- */
+.dr-scrim{position:fixed;inset:0;z-index:140;background:rgba(3,20,13,.55);opacity:0;transition:opacity .28s ease}
+.drawer{position:fixed;z-index:141;top:0;bottom:0;left:0;width:min(340px,86vw);display:flex;flex-direction:column;gap:12px;
+  padding:calc(14px + env(safe-area-inset-top,0px)) 14px calc(16px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));
+  background:var(--surface);color:var(--fg);border-right:1px solid var(--surface-edge);border-radius:0 24px 24px 0;
+  box-shadow:24px 0 60px -20px rgba(0,0,0,.45);transform:translateX(-104%);transition:transform .3s cubic-bezier(.2,.8,.2,1);overflow:hidden}
+html.dr-open .dr-scrim{opacity:1}
+html.dr-open .drawer{transform:none}
+html.dr-open,html.dr-open body{overflow:hidden}
+.drawer[hidden],.dr-scrim[hidden]{display:none}
+.dr-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dr-top .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg);font:700 1.05rem var(--font-d)}
+.dr-x{width:42px;height:42px;border-radius:12px;border:1px solid var(--surface-edge)!important;background:color-mix(in srgb,var(--fg) 6%,var(--surface))!important;color:var(--fg)!important;box-shadow:none!important;display:grid;place-items:center;cursor:pointer}
+.dr-x svg{width:20px;height:20px}
+.dr-find{display:flex;align-items:center;gap:8px;padding:0 12px;border-radius:14px;border:1px solid var(--surface-edge);background:color-mix(in srgb,var(--fg) 4%,var(--surface))}
+.dr-find svg{width:18px;height:18px;color:var(--muted);flex:none}
+.dr-find input{flex:1;min-width:0;border:0;background:none;color:var(--fg);font:16px var(--font-b);padding:12px 0;outline:none}
+.dr-find:focus-within{border-color:var(--green2);box-shadow:0 0 0 3px color-mix(in srgb,var(--green2) 25%,transparent)}
+.dr-list{flex:1;overflow-y:auto;overscroll-behavior:contain;display:grid;align-content:start;gap:10px;padding-right:2px}
+.dr-g{display:grid;gap:2px}
+.dr-g[hidden],.dr-g a[hidden]{display:none}
+.dr-h{margin:6px 0 2px;padding:0 12px;font:700 .7rem/1.2 var(--font-b);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.dr-list a{display:block;padding:11px 12px;border-radius:12px;text-decoration:none;color:var(--fg);font-weight:500}
+.dr-list a:hover{background:color-mix(in srgb,var(--green) 8%,var(--surface))}
+.dr-list a[aria-current="page"]{background:var(--green);color:#fff;font-weight:600}
+.dr-none{color:var(--muted);padding:8px 12px}
+.dr-donate{justify-content:center;width:100%}
+@media (min-width:1101px){.drawer,.dr-scrim{display:none!important}}
+@media (prefers-reduced-motion:reduce){.drawer,.dr-scrim{transition:none}}
+
+/* ---------- bottom tab bar (phones) ---------- */
+.tabbar{display:none}
+@media (max-width:760px){
+  :root{--tabbar:64px}
+  .tabbar{position:fixed;z-index:90;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);
+    padding:6px max(6px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(6px,env(safe-area-inset-left,0px));
+    background:var(--surface);border-top:1px solid var(--surface-edge);box-shadow:0 -10px 30px -18px rgba(8,48,28,.35)}
+  .tabbar a,.tabbar button{display:grid;justify-items:center;gap:3px;padding:6px 2px;border:0;border-radius:14px;background:none;color:var(--muted);
+    font:600 .72rem/1 var(--font-b);text-decoration:none;cursor:pointer;min-height:52px;align-content:center}
+  .tabbar svg{width:22px;height:22px}
+  .tabbar [aria-current="page"]{color:var(--green);background:color-mix(in srgb,var(--green) 12%,var(--surface))}
+  body{padding-bottom:calc(var(--tabbar) + env(safe-area-inset-bottom,0px))}
+  footer.site{padding-bottom:12px}
+  /* floating things sit above the tab bar */
+  .laari{bottom:calc(var(--tabbar) + 10px + env(safe-area-inset-bottom,0px))!important;right:10px!important}
+  .admin-fab{bottom:calc(var(--tabbar) + 12px + env(safe-area-inset-bottom,0px))}
+}
+@media (max-width:760px){
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tabbar [aria-current="page"]{color:#8FE3B6}}
+  :root[data-theme="dark"] .tabbar [aria-current="page"]{color:#8FE3B6}
+}
+
+/* ---------- Laari on phones: half-screen window above the round button ---------- */
+@media (max-width:760px){
+  .l-launch{padding:6px!important}
+  .l-launch span:not(.l-av){display:none}
+  .l-panel{width:calc(100vw - 20px)!important;height:52vh!important;height:52dvh!important;border-radius:22px}
+  .l-head{padding:8px 10px 8px 12px;gap:10px}
+  .l-head .l-av{width:32px;height:32px}.l-head .l-av img{width:20px}
+  .l-head small{display:none}
+  .l-head .x{width:34px;height:34px}
+  .l-msgs{padding:12px}
+  .l-sug{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding:0 12px 8px;scroll-snap-type:x proximity}
+  .l-sug::-webkit-scrollbar{display:none}
+  .l-sug button{flex:none;white-space:nowrap;scroll-snap-align:start}
+  .l-form{padding:8px}
+  .l-form input{font-size:16px;padding:10px 14px}
+  .l-form button{width:42px;height:42px}
+  .l-note{font-size:.66rem;padding:0 10px 8px}
+  /* while typing: fill the space above the keyboard */
+  .laari.typing .l-panel{position:fixed;left:10px;right:10px;width:auto!important;bottom:auto}
+  .laari.typing .l-sug,.laari.typing .l-note{display:none}
+  html.l-typing .tabbar{display:none}
+}
+
+/* ---------- forms: 16px text so iPhones do not zoom in ---------- */
+@media (max-width:760px),(pointer:coarse){
+  input:not([type=checkbox]):not([type=radio]):not([type=range]),select,textarea{font-size:16px!important}
+}
+
+/* ---------- nothing wider than the screen ---------- */
+img,video,iframe,svg{max-width:100%}
+.ppl>*,.grid>*,.g2>*,.g3>*,.g4>*,.two>*,.tabs-wrap>*,.dtabs>*{min-width:0}
+@media (max-width:700px){.tabs-wrap{grid-template-columns:1fr!important}}
+@media (max-width:380px){.ppl{gap:10px}}
+.table-wrap,.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+td.date,td.amount,td.code,time{white-space:nowrap}
+
+/* ---------- phones: compact but comfortable spacing ---------- */
+@media (max-width:760px){
+  .wrap{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
+}
+
+/* ---------- printouts are always white ---------- */
+@media print{
+  :root,:root[data-theme="dark"]{--bg:#fff;--fg:#000;--surface:#fff;--muted:#333;color-scheme:light}
+  html,body{background:#fff!important;color:#000!important}
+  body::after,.band::before,.field,.orbs,.site-header,#site-header,.nav-wrap,.tabbar,.drawer,.dr-scrim,.laari,.admin-fab,.lightbox,.modal,#progress{display:none!important}
+  .band,.cta-band,main>section{background:#fff!important;color:#000!important;box-shadow:none!important;border-color:#ccc!important}
+  .band *,.hero *{color:#000!important}
+  *{box-shadow:none!important;text-shadow:none!important;animation:none!important}
+}
+
+/* numbered badges: a deeper shade of their colour so white numbers stay readable */
+.mark.num{background:color-mix(in srgb,var(--c) 58%,#05261A)!important;color:#fff}

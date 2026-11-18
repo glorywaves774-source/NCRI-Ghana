@@ -39,9 +39,16 @@ A globe button in the header lets visitors translate the whole site: French, Twi
 ## Results charts
 Results > Headline numbers: set the planned range (low and high) and update **Achieved** as results are verified. The Impact page and the home page show the planned-reach chart and a matching verified-results pie, plus a planned-versus-verified comparison. Indicators add a status pie and progress bars once you enter them. Until actuals are entered the verified chart shows an empty ring, not made-up numbers.
 
-## Look and motion
-Brand colours are unchanged. Headings use Newsreader (serif) with Figtree for text, loaded from Google Fonts. Glass is used for the navigation, hero, overlays, chat and the green feature band; content cards are solid surfaces. Motion: scroll-triggered reveals, gentle parallax on background layers and photos (`assets/js/motion.js`), morphing colour blobs and wave edges on the green bands, and a bento layout for the pillars and impact tiles. All of it switches off for visitors who set "reduce motion" in their device. Styles are in the "Refinement layer" at the end of `assets/css/site.css`.
+## Look and motion (Aurora UI)
+Brand colours are unchanged. Headings use Newsreader (serif) with Figtree for text, loaded from Google Fonts. There is no glass: every panel, card, menu and button is a solid surface with soft depth and rounded corners. Colour comes from soft, slowly drifting aurora light (brand greens, teal and orange) behind the page, inside each section, across the green bands, over the hero photo and on the call-to-action banner. The navigation buttons all use the one brand green; Donate stays orange. Motion switches off for visitors who set "reduce motion" on their device. Styles: the "AURORA UI" layer at the end of `assets/css/site.css`, and `assets/css/mobile.css` (loaded last) for phones, tablets and printing.
 
+## Phones, tablets and dark mode
+- **Menu:** on phones and tablets the menu button sits top-left and opens a menu that slides in from the left over a dimmed page, with a "Find a page" box. It closes with ×, a tap on the dimmed page, Escape or the phone's Back button. Choosing a page does not leave an extra Back step.
+- **Tab bar (phones):** Home, Work, News, Donate and Menu along the bottom. Laari's button sits above it.
+- **Laari on phones:** opens as a half-screen window; the keyboard stays down until you tap the box, and while typing the window fills the space above the keyboard.
+- **Dark / light:** the moon/sun button is on every page, including the admin sign-in. The site follows the device until a visitor chooses, then remembers the choice. Printouts are always white.
+- **Admin on phones:** a bottom tab bar (Home, Messages, Gifts, News, Menu) and the same slide-in menu with a filter box.
+- **Checks:** `npm test` runs the automated tests (pages, standard pieces, forms, chat, admin sign-in).
 
 ## Call to action update
 The homepage CTA now uses **“Be Part of the Change”** and presents four clear routes: Partner With Us, Become a Volunteer, Support Our Work, and Work With Our Communities. The primary actions link to the existing partnerships, volunteer, donate, and contact pages. The Get Involved page introduction has also been updated.

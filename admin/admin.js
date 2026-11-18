@@ -37,36 +37,76 @@
     app.replaceChildren(h('form', { class: 'login', onsubmit: function (e) {
       e.preventDefault();
       api('POST', 'login', { email: email.value, password: pw.value }).then(function (j) { me = j.admin; start(); }).catch(function (er) { note(msg, er.message); });
-    } }, h('img', { src: '../assets/img/logo-symbol.png', alt: '' }), h('h1', null, 'NCRI-Ghana admin'), h('label', null, 'Email', email), h('label', null, 'Password', pw), msg, h('button', { class: 'btn p', type: 'submit' }, 'Sign in'), h('a', { href: '../' }, '← Back to the website')));
-    email.focus();
+    } }, h('div', { class: 'login-top' }, h('img', { src: '../assets/img/logo-symbol.png', alt: '' }), themeBtn()), h('h1', null, 'NCRI-Ghana admin'), h('label', null, 'Email', email), h('label', null, 'Password', pw), msg, h('button', { class: 'btn p', type: 'submit' }, 'Sign in'), h('a', { href: '../' }, '← Back to the website')));
+    if (!matchMedia('(max-width:820px)').matches) email.focus();
   }
 
   /* ---------- layout ---------- */
   var TABS = [['dash', 'Dashboard'], ['messages', 'Messages'], ['donations', 'Donations'], ['sep'], ['news', 'News'], ['documents', 'Documents'], ['faqs', 'Laari answers'], ['people', 'People'], ['partners', 'Partners'], ['videos', 'Videos'], ['gallery', 'Gallery'], ['metrics', 'Results: numbers'], ['indicators', 'Results: indicators'], ['donate_channels', 'Ways to give'], ['sep'], ['settings', 'Site text and live'], ['subscribers', 'Subscribers'], ['backups', 'Backups'], ['account', 'Account']];
   var cur = 'dash', body, navEl;
+  var scrim, tabbar, navPushed = false, navQ = '';
+  var BOTTOM = [['dash', 'Home', '⌂'], ['messages', 'Messages', '✉'], ['donations', 'Gifts', '♥'], ['news', 'News', '▤']];
   function shell() {
     body = h('main', { id: 'main' });
-    navEl = h('nav', { class: 'side', 'aria-label': 'Admin sections' });
-    app.replaceChildren(h('div', { class: 'shell' }, navEl, body));
+    navEl = h('nav', { class: 'side', id: 'side', 'aria-label': 'Admin sections' });
+    scrim = h('div', { class: 'scrim', onclick: function () { closeNav(); } });
+    tabbar = h('nav', { class: 'tabbar', 'aria-label': 'Main sections' });
+    app.replaceChildren(h('div', { class: 'shell' }, navEl, body), scrim, tabbar);
     drawNav();
+  }
+  function navOpen() { return navEl && navEl.classList.contains('open'); }
+  function openNav() {
+    if (navOpen()) return; navEl.classList.add('open'); document.documentElement.classList.add('nav-open');
+    try { history.pushState({ ncriNav: 1 }, ''); navPushed = true; } catch (e) { navPushed = false; }
+    var x = navEl.querySelector('.nav-x'); if (x) setTimeout(function () { x.focus({ preventScroll: true }); }, 50);
+  }
+  function closeNav(fromBack, keepHistory) {
+    if (!navOpen()) return; navEl.classList.remove('open'); document.documentElement.classList.remove('nav-open');
+    if (navPushed && !fromBack && !keepHistory) history.back();
+    navPushed = false;
+  }
+  window.addEventListener('popstate', function () { if (navOpen()) closeNav(true); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && navOpen()) closeNav(); });
+  /* choosing a section: close the menu and drop its history step, then show the section at the top */
+  function pick(t) { if (navOpen()) { var hadStep = navPushed; closeNav(false, true); if (hadStep) { navPushed = false; history.back(); } } go(t); }
+  var fold = function (t) { return String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); };
+  function themeBtn() {
+    var b = h('button', { type: 'button', class: 'btn theme-btn' });
+    function isDark() { var r = document.documentElement; return r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+    function sync() { var d = isDark(); document.documentElement.setAttribute('data-bs-theme', d ? 'dark' : 'light'); b.textContent = d ? '☀ Light mode' : '☾ Dark mode'; b.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); }
+    b.addEventListener('click', function () {
+      var t = isDark() ? 'light' : 'dark'; document.documentElement.dataset.theme = t;
+      try { localStorage.setItem('ncri-theme', t); } catch (e) { /* ignore */ }
+      document.cookie = 'ncri-theme=' + t + '; Path=/; Max-Age=31536000; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
+      document.querySelectorAll('.theme-btn').forEach(function (x) { x.dispatchEvent(new Event('sync')); });
+    });
+    b.addEventListener('sync', sync); sync(); return b;
   }
   function drawNav() {
     var nb = stats ? stats.messagesNew : 0;
-    var items = [h('div', { class: 'brand' }, h('img', { src: '../assets/img/logo-symbol.png', alt: '' }), 'NCRI-Ghana')];
+    var find = h('input', { type: 'search', class: 'nav-find', placeholder: 'Find a section', 'aria-label': 'Find a section', value: navQ, autocomplete: 'off' });
+    var items = [h('div', { class: 'brand' }, h('img', { src: '../assets/img/logo-symbol.png', alt: '' }), 'NCRI-Ghana', h('button', { type: 'button', class: 'nav-x', 'aria-label': 'Close menu', onclick: function () { closeNav(); } }, '×')), find];
     TABS.forEach(function (t) {
       if (t[0] === 'sep') { items.push(h('div', { class: 'sep' })); return; }
-      items.push(h('button', { type: 'button', 'aria-current': t[0] === cur ? 'page' : null, onclick: function () { go(t[0]); navEl.classList.remove('open'); } }, t[1], t[0] === 'messages' && nb ? h('span', { class: 'badge' }, nb) : null));
+      items.push(h('button', { type: 'button', 'data-k': t[1], 'aria-current': t[0] === cur ? 'page' : null, onclick: function () { navQ = ''; pick(t[0]); } }, t[1], t[0] === 'messages' && nb ? h('span', { class: 'badge' }, nb) : null));
     });
+    find.addEventListener('input', function () { navQ = find.value; var q = fold(find.value.trim());
+      navEl.querySelectorAll('button[data-k]').forEach(function (b) { b.hidden = !!q && fold(b.dataset.k).indexOf(q) < 0; });
+      navEl.querySelectorAll('.sep').forEach(function (x) { x.hidden = !!q; }); });
     items.push(h('div', { class: 'sep' }), h('button', { type: 'button', onclick: function () { location.href = '../'; } }, 'View website'),
       h('button', { type: 'button', onclick: function () { api('POST', 'logout').then(function () { me = null; login(); }); } }, 'Sign out'));
     navEl.replaceChildren.apply(navEl, items);
+    if (navQ) find.dispatchEvent(new Event('input'));
+    if (tabbar) tabbar.replaceChildren.apply(tabbar, BOTTOM.map(function (t) {
+      return h('button', { type: 'button', 'aria-current': t[0] === cur ? 'page' : null, onclick: function () { pick(t[0]); } }, h('span', { class: 'ti', 'aria-hidden': 'true' }, t[2]), t[1], t[0] === 'messages' && nb ? h('span', { class: 'badge' }, nb) : null);
+    }).concat([h('button', { type: 'button', 'aria-controls': 'side', onclick: openNav }, h('span', { class: 'ti', 'aria-hidden': 'true' }, '☰'), 'Menu')]));
   }
   function go(t) {
     cur = t; drawNav();
-    var bar = h('button', { class: 'btn burger', type: 'button', 'aria-label': 'Menu', onclick: function () { navEl.classList.toggle('open'); } }, '☰');
+    var bar = h('button', { class: 'btn burger', type: 'button', 'aria-label': 'Open menu', 'aria-controls': 'side', onclick: openNav }, '☰');
     body.replaceChildren(h('p', { class: 'mut' }, 'Loading…'));
     var f = { dash: dash, messages: messages, donations: donations, settings: settingsView, subscribers: subs, backups: backups, account: account }[t] || function () { return resource(t); };
-    Promise.resolve(f()).then(function (view) { body.replaceChildren(h('div', { class: 'bar' }, bar), view); window.scrollTo(0, 0); }).catch(function (e) { body.replaceChildren(h('div', { class: 'msg err' }, e.message)); });
+    Promise.resolve(f()).then(function (view) { body.replaceChildren(h('div', { class: 'bar top' }, bar, h('span', { class: 'spacer' }), themeBtn()), view); window.scrollTo(0, 0); }).catch(function (e) { body.replaceChildren(h('div', { class: 'msg err' }, e.message)); });
   }
 
   /* ---------- dashboard ---------- */
@@ -77,7 +117,7 @@
       function st(n, l, t) { return h('button', { class: 'stat', type: 'button', style: 'text-align:left;cursor:pointer;font:inherit;color:inherit', onclick: function () { go(t); } }, h('b', null, n), h('span', null, l)); }
       return h('div', null, h('h2', null, 'Welcome back'),
         h('div', { class: 'grid', style: 'margin:14px 0' }, st(s.messagesNew, 'new messages', 'messages'), st(s.donationsOpen, 'gifts waiting to be matched', 'donations'), st(paid, 'received so far', 'donations'), st(s.subscribers, 'subscribers', 'subscribers'), st(s.news, 'news stories', 'news'), st(s.documents, 'documents', 'documents')),
-        h('div', { class: 'card' }, h('h3', null, 'Questions Laari could not answer'), s.unanswered.length ? [h('p', { class: 'mut' }, 'Add an answer under “Laari answers” and she will know it next time. Total chats so far: ' + s.chats + '.'), h('table', null, h('tbody', null, s.unanswered.map(function (u) { return h('tr', null, h('td', null, u.q), h('td', null, u.n + '×'), h('td', { class: 'mut' }, when(u.last))); })))] : h('p', { class: 'mut' }, 'None yet. Everything visitors asked was answered.')));
+        h('div', { class: 'card' }, h('h3', null, 'Questions Laari could not answer'), s.unanswered.length ? [h('p', { class: 'mut' }, 'Add an answer under “Laari answers” and she will know it next time. Total chats so far: ' + s.chats + '.'), h('table', null, h('tbody', null, s.unanswered.map(function (u) { return h('tr', null, h('td', null, u.q), h('td', null, u.n + '×'), h('td', { class: 'mut when' }, when(u.last))); })))] : h('p', { class: 'mut' }, 'None yet. Everything visitors asked was answered.')));
     });
   }
 
@@ -155,8 +195,8 @@
     return api('GET', 'donations').then(function (rows) {
       return h('div', null, h('div', { class: 'bar' }, h('h2', null, 'Donations')), h('p', { class: 'mut' }, 'Gifts recorded on the website. When you see money arrive in your Mobile Money or bank account, find the reference and mark it Paid.'),
         h('div', { class: 'card' }, rows.length ? h('table', null, h('thead', null, h('tr', null, ['Reference', 'Donor', 'Amount', 'Status', ''].map(function (t) { return h('th', null, t); }))), h('tbody', null, rows.map(function (r) {
-          return h('tr', null, h('td', null, h('b', null, r.ref), h('div', { class: 'mut' }, when(r.created))), h('td', null, r.anonymous ? 'Anonymous' : r.name || '–', h('div', { class: 'mut' }, [r.email, r.phone, r.method].filter(Boolean).join(' · ')), r.message ? h('div', { class: 'mut' }, '“' + r.message + '”') : null),
-            h('td', null, money(r.amount, r.currency)), h('td', null, h('span', { class: 'pill ' + (r.status === 'paid' ? 'g' : r.status === 'pending' ? 'o' : '') }, r.status)),
+          return h('tr', null, h('td', { class: 'ref' }, h('b', null, r.ref), h('div', { class: 'mut' }, when(r.created))), h('td', null, r.anonymous ? 'Anonymous' : r.name || '–', h('div', { class: 'mut' }, [r.email, r.phone, r.method].filter(Boolean).join(' · ')), r.message ? h('div', { class: 'mut' }, '“' + r.message + '”') : null),
+            h('td', { class: 'money' }, money(r.amount, r.currency)), h('td', null, h('span', { class: 'pill ' + (r.status === 'paid' ? 'g' : r.status === 'pending' ? 'o' : '') }, r.status)),
             h('td', { class: 'act' }, r.status !== 'paid' ? h('button', { class: 'btn s p', type: 'button', onclick: function () { api('PUT', 'donations/' + r.ref, { status: 'paid' }).then(function () { go('donations'); }); } }, 'Mark paid') : null, ' ', r.status === 'pending' ? h('button', { class: 'btn s', type: 'button', onclick: function () { api('PUT', 'donations/' + r.ref, { status: 'cancelled' }).then(function () { go('donations'); }); } }, 'Cancel') : null));
         }))) : h('p', { class: 'mut' }, 'No gifts recorded yet.')));
     });
@@ -187,7 +227,7 @@
   function subs() {
     return api('GET', 'subscribers').then(function (rows) {
       return h('div', null, h('div', { class: 'bar' }, h('h2', null, 'Subscribers (' + rows.length + ')'), h('a', { class: 'btn', href: '../api/admin/subscribers?csv=1' }, 'Download CSV')),
-        h('div', { class: 'card' }, rows.length ? h('table', null, h('tbody', null, rows.map(function (r) { return h('tr', null, h('td', null, r.email), h('td', { class: 'mut' }, when(r.created))); }))) : h('p', { class: 'mut' }, 'No subscribers yet.')));
+        h('div', { class: 'card' }, rows.length ? h('table', null, h('tbody', null, rows.map(function (r) { return h('tr', null, h('td', null, r.email), h('td', { class: 'mut when' }, when(r.created))); }))) : h('p', { class: 'mut' }, 'No subscribers yet.')));
     });
   }
   /* ---------- backups and recovery ---------- */

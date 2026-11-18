@@ -1,0 +1,34 @@
+# Changelog
+
+## 18 November 2026: Aurora UI, phone navigation and dark mode
+
+**Look**
+- All glass effects removed: no frosted blur, see-through panels, moving light sweeps, mouse-following shine or ripple filter. Panels, menus and buttons are solid.
+- New Aurora UI: soft, slowly drifting colour light behind the page, in each section, on the green bands, over the hero photo and on the "Be Part of the Change" banner.
+- Hero text now sits on a soft green shade over the photo instead of a frosted box.
+- Navigation buttons all use the one brand green (Donate stays orange).
+
+**Phones and tablets**
+- Menu button moved to the top-left. The menu slides in from the left over a dimmed page, has a "Find a page" box, and closes with ×, a tap outside, Escape or the Back button.
+- New bottom tab bar on phones: Home, Work, News, Donate, Menu.
+- Laari opens as a half-screen window on phones, does not pop the keyboard up, and fills the space above the keyboard while you type.
+- Fixed: the donation option cards and the people cards ran off the side of the screen on phones.
+- Form fields use 16px text so iPhones do not zoom in.
+
+**Dark and light mode**
+- The choice is remembered in the browser and a cookie, and the button shows a sun in dark mode.
+- Fixed hard-to-read text: two SDG tiles (Clean Water, Gender Equality) and the numbered badges on the About page.
+- Printouts are always white.
+
+**Admin panel**
+- Dark/light button on the sign-in page and every admin screen.
+- New sign-in look (soft raised panel with pressed-in fields).
+- On phones: bottom tab bar (Home, Messages, Gifts, News, Menu) and a slide-in menu with a filter box, closed by ×, a tap outside, Escape or Back.
+- Dark mode menu and buttons use a deeper green so white text stays readable.
+
+**Other fixes**
+- The "Be Part of the Change" cards were all numbered 01; now 01–04.
+- Earlier today: the Managing Director's bio no longer resets on every restart; the Paystack payment check uses a safe comparison.
+
+**Tests**
+- New automated tests: `npm test`.

@@ -1,5 +1,5 @@
 /* NCRI-Ghana site styles. Brand colours come from the logo: deep green, leaf green and warm orange.
-   Layout: glass surfaces over slow colour fields, perspective tilt on cards, one deep-green band per page for rhythm. */
+   Layout: solid surfaces over soft aurora light (see AURORA UI at the end), perspective tilt on cards, one deep-green band per page for rhythm. */
 :root{
   --bg:#F2F7F1; --bg2:#E3EEE3; --fg:#0E2A1D; --muted:#44604F; --line:rgba(14,42,29,.14);
   --glass:rgba(255,255,255,.58); --glass-edge:rgba(255,255,255,.85); --shadow:rgba(8,48,28,.24);
@@ -1015,3 +1015,104 @@ footer.site .social a{border-radius:50%}
 .pitem img{height:64px;width:auto;max-width:200px;padding:4px 8px}
 .pitem.wide img{height:54px;max-width:230px}
 .pitem.wide span{display:none}
+
+/* =====================================================================
+   AURORA UI (replaces all glass)
+   No frosted blur, see-through panels, light sweeps, cursor shine or
+   refraction. Surfaces are solid; colour comes from soft, slowly drifting
+   aurora light behind them, in the brand greens, teal and orange.
+   ===================================================================== */
+:root{
+  --glass:var(--surface); --glass-edge:var(--surface-edge);
+  --au1:#2FB27A; --au2:#17A3B8; --au3:#F29A1A; --au4:#4FA33A; --au-a:.30;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--au-a:.22;--glass:var(--surface);--glass-edge:var(--surface-edge)}}
+:root[data-theme="dark"]{--au-a:.22;--glass:var(--surface);--glass-edge:var(--surface-edge)}
+
+/* 1. no glass anywhere */
+*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.glass::after{display:none!important}
+.liquid,.goals,.l-launch,.hero .pill,.hero .notice,.tabs.glass,.vglass{animation:none!important}
+.nav,.mmenu,.langmenu,.l-launch,.tabs.glass,.admin-fab,.cta-band,.sdg-detail,.empty.glass,.fm.glass,
+.liquid:not(.panel),.glass:not(.band .glass){
+  background:var(--surface)!important;border:1px solid var(--surface-edge)!important;box-shadow:var(--soft)!important}
+
+/* 2. the aurora behind the whole page */
+html{background:var(--bg)}
+body{background:transparent;isolation:isolate}
+body::after{content:"";position:fixed;inset:-20vmax;z-index:-1;pointer-events:none;opacity:var(--au-a);
+  background:
+    radial-gradient(40vmax 26vmax at 18% 22%,var(--au1),transparent 70%),
+    radial-gradient(36vmax 24vmax at 82% 18%,var(--au2),transparent 70%),
+    radial-gradient(34vmax 22vmax at 70% 78%,var(--au3),transparent 70%),
+    radial-gradient(38vmax 26vmax at 24% 84%,var(--au4),transparent 70%);
+  filter:blur(40px);animation:aurora 38s ease-in-out infinite alternate}
+@keyframes aurora{
+  0%{transform:translate3d(0,0,0) rotate(0deg) scale(1)}
+  50%{transform:translate3d(4vmax,-3vmax,0) rotate(8deg) scale(1.08)}
+  100%{transform:translate3d(-3vmax,3vmax,0) rotate(-6deg) scale(1.04)}}
+
+/* 3. each section carries a faint aurora in its own colours */
+main>section:not(.hero-sec):not(.band){position:relative}
+main>section:not(.hero-sec):not(.band)>.wrap{position:relative;z-index:1}
+main>section:not(.hero-sec):not(.band)::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;opacity:.16;
+  background:radial-gradient(60% 70% at 0% 0%,var(--g1,var(--au1)),transparent 70%),radial-gradient(55% 65% at 100% 100%,var(--g3,var(--au3)),transparent 70%),radial-gradient(45% 55% at 85% 10%,var(--g2,var(--au2)),transparent 70%)}
+
+/* 4. green bands: deep green with moving aurora light */
+.band{position:relative}
+.band::before{content:"";position:absolute;inset:-10%;pointer-events:none;z-index:0;opacity:.75;
+  background:radial-gradient(45% 60% at 15% 20%,rgba(47,178,122,.75),transparent 70%),radial-gradient(40% 55% at 85% 30%,rgba(23,163,184,.6),transparent 70%),radial-gradient(40% 55% at 60% 95%,rgba(242,154,26,.45),transparent 70%);
+  filter:blur(30px);animation:aurora 30s ease-in-out infinite alternate}
+.band>.wrap{position:relative;z-index:1}
+.band .glass,.goals{background:#0E4E36!important;border:1px solid rgba(255,255,255,.14)!important;box-shadow:0 18px 40px -20px rgba(0,0,0,.55)!important;color:#fff}
+.goals li{background:#13603F;border-color:rgba(255,255,255,.12)}
+.goals li:hover{background:#18704A}
+
+/* 5. hero: no see-through box; a solid-colour aurora shade keeps text readable over the photo */
+body:has(#hero) .hero .panel,body:has(#hero) .hero .panel.liquid,.hero .panel,.hero .panel.liquid{background:none!important;border:0!important;box-shadow:none!important}
+.slide::after{background:
+  radial-gradient(60% 80% at 0% 100%,rgba(47,178,122,.45),transparent 70%),
+  radial-gradient(40% 50% at 10% 0%,rgba(23,163,184,.35),transparent 70%),
+  linear-gradient(90deg,rgba(5,38,25,.88) 0,rgba(5,38,25,.62) 42%,rgba(5,38,25,.08) 72%,transparent 100%)!important}
+.hero .pill,.hero .notice{background:#0A4630!important;border:1px solid rgba(255,255,255,.18)!important;box-shadow:0 10px 26px -12px rgba(0,0,0,.6)!important;color:#fff}
+@media (max-width:700px){.slide::after{background:linear-gradient(180deg,rgba(5,38,25,.35) 0,rgba(5,38,25,.85) 55%,rgba(5,38,25,.92) 100%)!important}}
+
+/* 6. call-to-action banners: solid card washed with aurora light */
+.cta-band{position:relative;isolation:isolate}
+.cta-band::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;opacity:.32;
+  background:radial-gradient(50% 80% at 10% 10%,var(--au1),transparent 70%),radial-gradient(45% 70% at 90% 20%,var(--au2),transparent 70%),radial-gradient(50% 70% at 50% 110%,var(--au3),transparent 70%)}
+.cta-band::after{display:none!important}
+
+/* 7. article viewer: solid panels on its dark aurora background */
+.vglass{background:#0B2A1D!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:0 20px 50px -20px rgba(0,0,0,.6)!important}
+
+/* 8. buttons: solid colour, no see-through tint or wet highlight */
+.btn::before,.links>a::before,.links .dd>button::before,.nav .icon-btn::before{display:none!important}
+.btn,.links>a,.links .dd>button{background:color-mix(in srgb,var(--w) 16%,var(--surface))!important;border:1px solid color-mix(in srgb,var(--w) 45%,var(--surface))!important;
+  box-shadow:0 8px 18px -12px color-mix(in srgb,var(--w) 80%,#000)!important}
+.btn.primary{background:linear-gradient(180deg,#F7AE3A,var(--orange))!important;border-color:#D9860F!important;color:#2A1800}
+.btn.green{background:linear-gradient(180deg,var(--green2),var(--green))!important;border-color:var(--green)!important;color:#fff;text-shadow:none}
+.btn.ghost{background:#0A4630!important;border-color:rgba(255,255,255,.4)!important;color:#fff;text-shadow:none}
+.links>a:hover,.links .dd>button:hover,.links .dd.open>button,.links [aria-current="page"],.links .dd:has([aria-current="page"])>button{background:var(--nc)!important;border-color:var(--nc)!important;color:#fff;text-shadow:none}
+.nav .icon-btn,.nav .lang .icon-btn,.nav #lang{background:var(--w)!important;border:0!important;box-shadow:0 6px 14px -8px color-mix(in srgb,var(--w) 80%,#000)!important}
+.vid .play span{background:rgba(5,38,25,.85)}
+
+/* 8b. featured-focus rows on the green band: solid */
+.focus-card{background:#0E4E36!important;border-color:rgba(255,255,255,.16)!important}
+.focus-card:hover,.focus-card:focus-visible{background:#146142!important}
+
+/* 8c. small leftovers: footer email box and live-status label */
+footer.site input{background:#0C3D29!important;border-color:rgba(255,255,255,.22)!important}
+.status-pill{background:#0A4630!important;color:#fff}
+
+/* 9. overlays dim the page but do not blur it */
+.modal,.lightbox,.focus-modal-backdrop{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+
+@media (prefers-reduced-motion:reduce){body::after,.band::before{animation:none}}
+
+/* ===== Navigation: one colour for every menu and icon button (brand green); Donate stays orange ===== */
+.links>*,.links>*:nth-child(n){--nc:var(--green)!important}
+.links>a,.links .dd>button{color:var(--accent)}
+.nav .icon-btn,.nav .icon-btn#burger,.nav .lang .icon-btn,.nav #lang{--w:var(--green)!important;color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .links>a,:root:not([data-theme="light"]) .links .dd>button{color:#CFEFDC}}
+:root[data-theme="dark"] .links>a,:root[data-theme="dark"] .links .dd>button{color:#CFEFDC}

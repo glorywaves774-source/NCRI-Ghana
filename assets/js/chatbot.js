@@ -11,7 +11,7 @@
     '<div class="l-msgs" id="l-msgs" role="log" aria-live="polite" aria-relevant="additions"></div>' +
     '<div class="l-sug" id="l-sug"></div>' +
     '<form class="l-form" id="l-form" autocomplete="off"><label class="sr" for="l-in">Type your question</label><input id="l-in" maxlength="300" placeholder="Ask me anything…"><button type="submit" aria-label="Send">' + ic('send') + '</button></form>' +
-    '<div class="l-note">Laari answers common questions. For anything else, <a href="contact.html">contact the team</a>.</div></div>' +
+    '<div class="l-note">Laari answers common questions. Please don’t share personal details here. For anything else, <a href="contact.html">contact the team</a>.</div></div>' +
     '<button class="l-launch glass" type="button" id="l-open" aria-expanded="false" aria-controls="l-panel"><span class="l-av"><img src="assets/img/logo-symbol.png" alt="" width="30" height="25"></span><span>Ask Laari</span></button>';
   document.body.appendChild(root);
 
@@ -50,7 +50,7 @@
       add('bot', a.reply, a.link); history.push({ w: 'bot', t: a.reply, l: a.link }); save(); chips(a.suggestions);
     }).catch(function () {
       t.remove(); add('bot', 'Sorry, I could not reach the server just now. Please try again, or use the Contact page.', { url: '/contact', label: 'Contact the team' });
-    }).then(function () { busy = false; input.focus(); });
+    }).then(function () { busy = false; if (!phone() || root.classList.contains('typing')) input.focus(); });
   }
 
   function open() {
@@ -61,10 +61,21 @@
       else NCRI.get('chat/start').catch(function () { return NCRI.get('faqs').then(function (l) { return { greeting: 'Akwaaba! I’m Laari, NCRI-Ghana’s virtual guide. Ask me anything about our work, or pick a question below.', suggestions: l.slice(0, 5).map(function (f) { return f.question; }) }; }); })
         .then(function (s) { add('bot', s.greeting); history.push({ w: 'bot', t: s.greeting }); save(); chips(s.suggestions); });
     }
-    setTimeout(function () { input.focus(); }, 60);
+    if (!phone()) setTimeout(function () { input.focus(); }, 60);   /* on phones the keyboard stays down until the visitor taps the box */
     try { sessionStorage.setItem('laari-open', '1'); } catch (e) { /* ignore */ }
   }
   function close() { root.classList.remove('open'); $('#l-open').setAttribute('aria-expanded', 'false'); $('#l-open').focus(); try { sessionStorage.removeItem('laari-open'); } catch (e) { /* ignore */ } }
+  /* phones: while typing, the window fills the space above the keyboard and the suggestions and note step aside */
+  function phone() { return matchMedia('(max-width:760px)').matches; }
+  var panel = $('#l-panel'), vv = window.visualViewport;
+  function fit() {
+    if (!root.classList.contains('typing') || !vv) { panel.style.top = panel.style.height = ''; return; }
+    panel.style.top = Math.round(vv.offsetTop + 8) + 'px'; panel.style.height = Math.round(vv.height - 16) + 'px';
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  input.addEventListener('focus', function () { if (phone()) { root.classList.add('typing'); document.documentElement.classList.add('l-typing'); fit(); setTimeout(fit, 300); } });
+  input.addEventListener('blur', function () { setTimeout(function () { if (document.activeElement !== input) { root.classList.remove('typing'); document.documentElement.classList.remove('l-typing'); fit(); } }, 120); });
+  if (vv) { vv.addEventListener('resize', fit); vv.addEventListener('scroll', fit); }
   $('#l-open').addEventListener('click', open); $('#l-close').addEventListener('click', close);
   $('#l-form').addEventListener('submit', function (e) { e.preventDefault(); ask(input.value); });
   root.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('open')) close(); });

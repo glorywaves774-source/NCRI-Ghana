@@ -40,7 +40,7 @@
     cloud: '<path d="M7 14a4 4 0 1 1 1-7.9A5 5 0 0 1 18 8a3.5 3.5 0 0 1 0 7H7z"/><path d="M9 18l-1 3M13 18l-1 3M17 18l-1 3"/>',
     shield: '<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>', crown: '<path d="M4 18h16"/><path d="M5 18L4 8l5 4 3-6 3 6 5-4-1 10"/>',
     circles: '<circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/>', scales: '<path d="M12 4v16M6 20h12M5 8h14"/><path d="M5 8l-3 6a3 3 0 0 0 6 0zM19 8l-3 6a3 3 0 0 0 6 0z"/>',
-    home: '<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>', bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+    home: '<path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-6h4v6"/>', sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>', bulb: '<path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
     leaf: '<path d="M5 19C5 10 11 5 20 5c0 9-5 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/>', link: '<path d="M9 14a4 4 0 1 1 0-8h3M15 10a4 4 0 1 1 0 8h-3M9 12h6"/>',
     heart: '<path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/>', star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',
     mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>', pin: '<path d="M12 21s7-6 7-11a7 7 0 0 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
@@ -130,18 +130,34 @@
       return '<div class="dd"><button type="button" aria-expanded="false"' + (cur ? ' aria-current="page"' : '') + '>' + esc(n.t) + ic('chev') + '</button><div class="dd-menu">' +
         n.kids.map(function (k) { return '<a href="' + k[1] + '"' + (isCur(k[1]) ? ' aria-current="page"' : '') + '>' + esc(k[0]) + '</a>'; }).join('') + '</div></div>';
     }).join('');
-    var mob = NAV.map(function (n) {
-      if (!n.kids) return '<a href="' + n.href + '">' + n.t + '</a>';
-      return '<details><summary>' + esc(n.t) + '</summary>' + n.kids.map(function (k) { return '<a href="' + k[1] + '">' + esc(k[0]) + '</a>'; }).join('') + '</details>';
+    /* phone and tablet menu: a drawer that slides in from the left over a dimmed page */
+    var groups = NAV.map(function (n) {
+      var items = n.kids || [[n.t, n.href]];
+      return '<div class="dr-g"><p class="dr-h">' + esc(n.t) + '</p>' + items.map(function (k) {
+        return '<a href="' + k[1] + '"' + (isCur(k[1]) ? ' aria-current="page"' : '') + '>' + esc(k[0]) + '</a>'; }).join('') + '</div>';
     }).join('');
+    var TABS = [['Home', 'index.html', 'home', ['index.html']], ['Work', 'programs.html', 'sprout', ['programs.html', 'mel.html', 'resources.html']], ['News', 'news.html', 'file', ['news.html', 'media.html']], ['Donate', 'donate.html', 'heart', ['donate.html']]];
     $('#site-header').innerHTML =
-      '<div class="nav-wrap"><div class="wrap"><nav class="nav glass liquid" aria-label="Main">' +
+      '<div class="nav-wrap"><div class="wrap"><nav class="nav" aria-label="Main">' +
+      '<button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer">' + ic('menu') + '</button>' +
       '<a class="brand" href="index.html" aria-label="NCRI-Ghana home"><img src="assets/img/logo-symbol.png" alt="" width="46" height="38"><span translate="no">NCRI-Ghana</span></a>' +
       '<div class="links">' + links + '</div>' +
-      '<button class="icon-btn" id="theme" type="button" aria-label="Switch colour theme">' + ic('moon') + '</button>' +
-      '<a class="btn primary sm" href="donate.html">' + ic('heart') + ' Donate</a>' +
-      '<button class="icon-btn burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mmenu">' + ic('menu') + '</button>' +
-      '</nav><div class="mmenu glass liquid" id="mmenu">' + mob + '<a href="donate.html" style="color:var(--accent);font-weight:700">Donate</a></div></div></div>';
+      '<button class="icon-btn" id="theme" type="button" aria-label="Switch to dark mode">' + ic('moon') + '</button>' +
+      '<a class="btn primary sm hdr-donate" href="donate.html">' + ic('heart') + ' Donate</a>' +
+      '</nav></div></div>';
+    var shell = document.createElement('div');
+    shell.innerHTML =
+      '<div class="dr-scrim" id="dr-scrim" hidden></div>' +
+      '<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>' +
+      '<div class="dr-top"><a class="brand" href="index.html"><img src="assets/img/logo-symbol.png" alt="" width="40" height="33"><span translate="no">NCRI-Ghana</span></a>' +
+      '<button class="icon-btn dr-x" id="dr-x" type="button" aria-label="Close menu">' + ic('x') + '</button></div>' +
+      '<label class="dr-find"><span class="sr">Find a page</span>' + ic('search') + '<input id="dr-q" type="search" placeholder="Find a page" autocomplete="off" enterkeyhint="search"></label>' +
+      '<nav class="dr-list" aria-label="All pages"><div class="dr-g"><a href="index.html"' + (isCur('index.html') ? ' aria-current="page"' : '') + '>Home</a></div>' + groups + '<p class="dr-none" hidden>No page matches that.</p></nav>' +
+      '<a class="btn primary dr-donate" href="donate.html">' + ic('heart') + ' Donate</a></aside>' +
+      '<nav class="tabbar" aria-label="Main sections">' + TABS.map(function (t) {
+        return '<a href="' + t[1] + '"' + (t[3].indexOf(PAGE) >= 0 ? ' aria-current="page"' : '') + '>' + ic(t[2]) + '<span>' + t[0] + '</span></a>'; }).join('') +
+      '<button type="button" id="tab-menu" aria-controls="drawer" aria-expanded="false">' + ic('menu') + '<span>Menu</span></button></nav>';
+    while (shell.firstChild) document.body.appendChild(shell.firstChild);
 
     $$('.dd').forEach(function (dd) {
       var b = $('button', dd), t;
@@ -151,13 +167,64 @@
       dd.addEventListener('keydown', function (e) { if (e.key === 'Escape') { set(false); b.focus(); } });
     });
     document.addEventListener('click', function (e) { if (!e.target.closest('.dd')) $$('.dd.open').forEach(function (x) { x.classList.remove('open'); $('button', x).setAttribute('aria-expanded', 'false'); }); });
-    var burger = $('#burger'), mm = $('#mmenu');
-    burger.addEventListener('click', function () { var o = mm.classList.toggle('open'); burger.setAttribute('aria-expanded', o); });
-    $$('a', mm).forEach(function (a) { a.addEventListener('click', function () { mm.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); }); });
-    $('#theme').addEventListener('click', function () {
-      var r = document.documentElement, dark = r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
-      var t = dark ? 'light' : 'dark'; r.dataset.theme = t;
+
+    var drawer = $('#drawer'), scrim = $('#dr-scrim'), q = $('#dr-q'), openers = [$('#burger'), $('#tab-menu')], lastFocus = null, pushed = false;
+    function setOpen(o) {
+      drawer.hidden = scrim.hidden = false;
+      requestAnimationFrame(function () { document.documentElement.classList.toggle('dr-open', o); });
+      openers.forEach(function (b) { b.setAttribute('aria-expanded', o); });
+      if (!o) setTimeout(function () { if (!document.documentElement.classList.contains('dr-open')) { drawer.hidden = scrim.hidden = true; } }, 320);
+    }
+    function openDrawer() {
+      if (document.documentElement.classList.contains('dr-open')) return;
+      lastFocus = document.activeElement; setOpen(true);
+      try { history.pushState({ ncriDrawer: 1 }, ''); pushed = true; } catch (e) { pushed = false; }
+      setTimeout(function () { $('#dr-x').focus({ preventScroll: true }); }, 60);
+    }
+    function closeDrawer(fromBack) {
+      if (!document.documentElement.classList.contains('dr-open')) return;
+      setOpen(false); q.value = ''; filter('');
+      if (pushed && !fromBack) { pushed = false; history.back(); } else pushed = false;
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    openers.forEach(function (b) { b.addEventListener('click', openDrawer); });
+    $('#dr-x').addEventListener('click', function () { closeDrawer(); });
+    scrim.addEventListener('click', function () { closeDrawer(); });
+    window.addEventListener('popstate', function () { if (document.documentElement.classList.contains('dr-open')) closeDrawer(true); });
+    drawer.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { e.preventDefault(); closeDrawer(); return; }
+      if (e.key === 'Tab') { var f = $$('a,button,input', drawer).filter(function (x) { return x.offsetParent; }), a = f[0], z = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); } }
+    });
+    /* choosing a page replaces the menu's history step, so Back does not need an extra press */
+    $$('a[href]', drawer).forEach(function (a) { a.addEventListener('click', function (e) {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button) return;
+      var href = a.getAttribute('href'); e.preventDefault(); setOpen(false);
+      var samePage = href.split('#')[0] === PAGE;
+      if (pushed) { pushed = false; if (samePage) { history.back(); setTimeout(function () { location.hash = href.split('#')[1] || ''; if (!href.split('#')[1]) scrollTo(0, 0); }, 60); return; } location.replace(href); }
+      else location.href = href;
+    }); });
+    var fold = function (t) { return String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim(); };
+    function filter(v) {
+      var n = fold(v), any = false;
+      $$('.dr-g', drawer).forEach(function (g) { var hit = false;
+        $$('a', g).forEach(function (a) { var ok = !n || fold(a.textContent + ' ' + (($('.dr-h', g) || {}).textContent || '')).indexOf(n) >= 0; a.hidden = !ok; hit = hit || ok; });
+        g.hidden = !hit; any = any || hit; });
+      $('.dr-none', drawer).hidden = any;
+    }
+    q.addEventListener('input', function () { filter(q.value); });
+    q.addEventListener('keydown', function (e) { if (e.key === 'Enter') { var a = $$('.dr-list a', drawer).filter(function (x) { return !x.hidden; })[0]; if (a) a.click(); } });
+
+    /* light and dark: follows the device until the visitor chooses; the choice is kept in storage and a cookie */
+    var themeBtn = $('#theme');
+    function isDark() { var r = document.documentElement; return r.dataset.theme ? r.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+    function syncTheme() { var d = isDark(); document.documentElement.setAttribute('data-bs-theme', d ? 'dark' : 'light'); themeBtn.innerHTML = ic(d ? 'sun' : 'moon'); themeBtn.setAttribute('aria-label', d ? 'Switch to light mode' : 'Switch to dark mode'); themeBtn.title = d ? 'Light mode' : 'Dark mode'; }
+    syncTheme();
+    try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncTheme); } catch (e) { /* older browsers */ }
+    themeBtn.addEventListener('click', function () {
+      var t = isDark() ? 'light' : 'dark'; document.documentElement.dataset.theme = t; syncTheme();
       try { localStorage.setItem('ncri-theme', t); } catch (e) { /* ignore */ }
+      document.cookie = 'ncri-theme=' + t + '; Path=/; Max-Age=31536000; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
     });
   }
 
@@ -216,7 +283,7 @@
       '<filter id="lg" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.011 0.018" numOctaves="2" seed="7" result="n"/><feGaussianBlur in="n" stdDeviation="2.5" result="b"/><feDisplacementMap in="SourceGraphic" in2="b" scale="22" xChannelSelector="R" yChannelSelector="G"/></filter>' +
       '<filter id="lens" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency="0.02 0.03" numOctaves="1" seed="2" result="n"/><feGaussianBlur in="n" stdDeviation="3" result="b"/><feDisplacementMap in="SourceGraphic" in2="b" scale="46" xChannelSelector="R" yChannelSelector="G"/></filter></defs></svg>';
     document.body.appendChild(d.firstChild);
-    try { var br = navigator.userAgentData && navigator.userAgentData.brands; if ((br && br.some(function (b) { return /Chromium/.test(b.brand); })) || (!br && window.chrome)) document.documentElement.classList.add('lg-ok'); } catch (e) { /* plain glass */ }
+    try { var br = navigator.userAgentData && navigator.userAgentData.brands; if ((br && br.some(function (b) { return /Chromium/.test(b.brand); })) || (!br && window.chrome)) /* liquid-glass refraction switched off (Aurora UI) */; } catch (e) { /* plain glass */ }
   }
 
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function (es) {

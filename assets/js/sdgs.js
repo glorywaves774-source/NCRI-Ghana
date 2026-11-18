@@ -23,7 +23,12 @@
     17: { tier: 'support', pillars: ['climate-governance-resilience'], how: 'We work with communities, traditional leaders, schools and local institutions, and welcome new partners.' }
   };
   var ORDER_CORE = [4, 5, 2, 6, 8, 13, 16];
-  function ink(hex) { var n = parseInt(hex.slice(1), 16), r = n >> 16 & 255, g = n >> 8 & 255, b = n & 255; return (0.299 * r + 0.587 * g + 0.114 * b) > 165 ? '#1B1B1B' : '#FFFFFF'; }
+  /* text colour for a tile: whichever of dark or white has the higher contrast with the goal's colour */
+  function ink(hex) {
+    var n = parseInt(hex.slice(1), 16), c = [n >> 16 & 255, n >> 8 & 255, n & 255].map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    var L = 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2], white = 1.05 / (L + 0.05), dark = (L + 0.05) / 0.0612;
+    return dark > white ? '#1B1B1B' : '#FFFFFF';
+  }
 
   S.sdgs = function (host) {
     return NCRI.get('programs').then(function (programs) {
